@@ -62,4 +62,9 @@ public class CourierService {
             return false;
         }
     }
+
+    // Get couriers without pending packages
+    public List<Courier> getAllCouriersWithoutPendingPackages() {
+        return courierRepository.findAllCouriersWithoutPendingPackages();
+    }
 }

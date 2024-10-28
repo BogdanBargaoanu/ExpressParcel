@@ -32,4 +32,9 @@ public class CourierController {
     public boolean deleteCourier(@PathVariable Integer id) {
         return courierService.deleteCourier(id);
     }
+
+    @GetMapping("/no-pending-packages")
+    public List<Courier> getAllCouriersWithoutPendingPackages() {
+        return courierService.getAllCouriersWithoutPendingPackages();
+    }
 }
