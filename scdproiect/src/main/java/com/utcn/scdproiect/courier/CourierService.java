@@ -51,10 +51,10 @@ public class CourierService {
 
     // Delete
     @Transactional
-    public boolean deleteCourier(Integer courier_id) {
+    public boolean deleteCourier(Integer id) {
         try {
-            if (courierRepository.existsById(courier_id)) {
-                courierRepository.deleteById(courier_id);
+            if (courierRepository.existsById(id)) {
+                courierRepository.deleteById(id);
                 return true;
             } else {
                 return false;
