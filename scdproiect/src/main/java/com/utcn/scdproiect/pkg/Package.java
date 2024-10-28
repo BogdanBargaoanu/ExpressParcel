@@ -18,15 +18,64 @@ public class Package {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @ManyToOne
     @JoinColumn(name = "courier_id", nullable = false)
     private Courier courier;
+
+    public Courier getCourier() {
+        return courier;
+    }
+
+    public void setCourier(Courier courier) {
+        this.courier = courier;
+    }
 
     @Column(nullable = false, updatable = false)
     @CreationTimestamp
     private Date createdOn;
 
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
     private String deliveryAddress;
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
     private boolean payOnDelivery;
+
+    public boolean isPayOnDelivery() {
+        return payOnDelivery;
+    }
+
+    public void setPayOnDelivery(boolean payOnDelivery) {
+        this.payOnDelivery = payOnDelivery;
+    }
+
     private PackageStatus status;
+
+    public PackageStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PackageStatus status) {
+        this.status = status;
+    }
 }

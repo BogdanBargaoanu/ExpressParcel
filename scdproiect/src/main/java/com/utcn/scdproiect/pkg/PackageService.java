@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PackageService {
@@ -23,7 +24,20 @@ public class PackageService {
         return packageRepository.save(newPackage);
     }
 
-    //TODO: Update
+    @Transactional
+    public Package updatePackage(Integer id, Package updatedPackage) {
+        Optional<Package> existingPackageOpt = packageRepository.findById(id);
+        if (existingPackageOpt.isPresent()) {
+            Package existingPackage = existingPackageOpt.get();
+            existingPackage.setCourier(updatedPackage.getCourier());
+            existingPackage.setDeliveryAddress(updatedPackage.getDeliveryAddress());
+            existingPackage.setPayOnDelivery(updatedPackage.isPayOnDelivery());
+            existingPackage.setStatus(updatedPackage.getStatus());
+            return packageRepository.save(existingPackage);
+        } else {
+            throw new RuntimeException("Package not found with id " + id);
+        }
+    }
     //TODO: DELETE
     //TODO: chestii din readme
 
