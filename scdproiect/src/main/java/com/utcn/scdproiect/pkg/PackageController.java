@@ -18,7 +18,15 @@ public class PackageController {
     }
 
     @GetMapping
-    public List<Package> getAllPackages() {
-        return packageService.getAllPackages();
+    public List<Package> getAllPackages() { return packageService.getAllPackages(); }
+
+    @PutMapping("/{id}")
+    public Package updatePackage(@PathVariable Integer id, @RequestBody Package updatedPackage) {
+        return packageService.updatePackage(id, updatedPackage);
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean deletePackage(@PathVariable Integer id) {
+        return packageService.deletePackage(id);
     }
 }

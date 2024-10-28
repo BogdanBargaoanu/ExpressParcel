@@ -26,22 +26,39 @@ public class PackageService {
 
     @Transactional
     public Package updatePackage(Integer id, Package updatedPackage) {
-        Optional<Package> existingPackageOpt = packageRepository.findById(id);
-        if (existingPackageOpt.isPresent()) {
-            Package existingPackage = existingPackageOpt.get();
-            existingPackage.setCourier(updatedPackage.getCourier());
-            existingPackage.setDeliveryAddress(updatedPackage.getDeliveryAddress());
-            existingPackage.setPayOnDelivery(updatedPackage.isPayOnDelivery());
-            existingPackage.setStatus(updatedPackage.getStatus());
-            return packageRepository.save(existingPackage);
-        } else {
-            throw new RuntimeException("Package not found with id " + id);
+        try {
+            Optional<Package> existingPackageOpt = packageRepository.findById(id);
+            if (existingPackageOpt.isPresent()) {
+                Package existingPackage = existingPackageOpt.get();
+                existingPackage.setCourier(updatedPackage.getCourier());
+                existingPackage.setDeliveryAddress(updatedPackage.getDeliveryAddress());
+                existingPackage.setPayOnDelivery(updatedPackage.isPayOnDelivery());
+                existingPackage.setStatus(updatedPackage.getStatus());
+                return packageRepository.save(existingPackage);
+            } else {
+                Package failed = new Package();
+                failed.setId(-1);
+                return failed;
+            }
+        } catch (Exception e) {
+            Package failed = new Package();
+            failed.setId(-1);
+            return failed;
         }
     }
-    //TODO: DELETE
-    //TODO: chestii din readme
 
-    //public List<Package> getPackagesForCourier(Courier courier) {
-        //return packageRepository.findBy<Courier>(courier);
-    //}
+    @Transactional
+    public boolean deletePackage(Integer id) {
+        try {
+            if (packageRepository.existsById(id)) {
+                packageRepository.deleteById(id);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    //TODO: chestii din readme
 }
