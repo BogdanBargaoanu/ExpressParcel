@@ -24,6 +24,7 @@ public class PackageService {
         return packageRepository.save(newPackage);
     }
 
+    // Update
     @Transactional
     public Package updatePackage(Integer id, Package updatedPackage) {
         try {
@@ -41,12 +42,14 @@ public class PackageService {
                 return failed;
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             Package failed = new Package();
             failed.setId(-1);
             return failed;
         }
     }
 
+    // Delete
     @Transactional
     public boolean deletePackage(Integer id) {
         try {
@@ -57,8 +60,8 @@ public class PackageService {
                 return false;
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
-    //TODO: chestii din readme
 }

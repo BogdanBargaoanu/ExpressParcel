@@ -49,6 +49,7 @@ public class Package {
     public void setCreatedOn(Date createdOn) {
         this.createdOn = createdOn;
     }
+
     private String deliveryAddress;
 
     public String getDeliveryAddress() {
