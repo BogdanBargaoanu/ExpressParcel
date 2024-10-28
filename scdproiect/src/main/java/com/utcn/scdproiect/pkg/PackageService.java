@@ -64,4 +64,9 @@ public class PackageService {
             return false;
         }
     }
+
+    // Get packages for courier
+    public List<Package> getPackagesForCourier(Integer courierId) {
+        return packageRepository.findByCourierId(courierId);
+    }
 }

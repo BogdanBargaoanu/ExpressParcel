@@ -29,4 +29,9 @@ public class PackageController {
     public boolean deletePackage(@PathVariable Integer id) {
         return packageService.deletePackage(id);
     }
+
+    @GetMapping("/courier/{courierId}")
+    public List<Package> getPackagesForCourier(@PathVariable Integer courierId) {
+        return packageService.getPackagesForCourier(courierId);
+    }
 }

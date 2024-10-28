@@ -33,7 +33,7 @@ public class CourierService {
                 Courier existingCourier = existingCourierOpt.get();
                 existingCourier.setName(updatedCourier.getName());
                 existingCourier.setEmail(updatedCourier.getEmail());
-                existingCourier.setManager(updatedCourier.getManager());
+                existingCourier.setManager_id(updatedCourier.getManager_id());
                 return courierRepository.save(existingCourier);
             } else {
                 Courier failed = new Courier();

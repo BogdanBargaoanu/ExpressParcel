@@ -44,13 +44,13 @@ public class Courier {
     }
 
     @Column(nullable = false)
-    private Courier manager;
+    private Integer manager_id;
 
-    public Courier getManager() {
-        return manager;
+    public Integer getManager_id() {
+        return manager_id;
     }
 
-    public void setManager(Courier manager) {
-        this.manager = manager;
+    public void setManager_id(Integer manager_id) {
+        this.manager_id = manager_id;
     }
 }
