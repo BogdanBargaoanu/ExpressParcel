@@ -37,4 +37,9 @@ public class CourierController {
     public List<Courier> getAllCouriersWithoutPendingPackages() {
         return courierService.getAllCouriersWithoutPendingPackages();
     }
+
+    @GetMapping("/delivered-by-managers")
+    public List<Object[]> getAllManagersAndDeliveredNumber() {
+        return courierService.getAllManagersAndDeliveredNumber();
+    }
 }

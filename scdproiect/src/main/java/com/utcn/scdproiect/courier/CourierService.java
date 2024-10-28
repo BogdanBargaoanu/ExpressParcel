@@ -67,4 +67,9 @@ public class CourierService {
     public List<Courier> getAllCouriersWithoutPendingPackages() {
         return courierRepository.findAllCouriersWithoutPendingPackages();
     }
+
+    // Get all managers and delivered number
+    public List<Object[]> getAllManagersAndDeliveredNumber() {
+        return courierRepository.findAllManagersAndDeliveredNumber();
+    }
 }
