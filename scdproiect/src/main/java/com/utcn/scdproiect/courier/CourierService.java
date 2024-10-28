@@ -1,6 +1,7 @@
 package com.utcn.scdproiect.courier;
 
 import com.utcn.scdproiect.pkg.Package;
+import com.utcn.scdproiect.pkg.PackageStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,17 +34,17 @@ public class CourierService {
                 Courier existingCourier = existingCourierOpt.get();
                 existingCourier.setName(updatedCourier.getName());
                 existingCourier.setEmail(updatedCourier.getEmail());
-                existingCourier.setManager_id(updatedCourier.getManager_id());
+                existingCourier.setManager(updatedCourier.getManager());
                 return courierRepository.save(existingCourier);
             } else {
                 Courier failed = new Courier();
-                failed.setCourierId(-1);
+                failed.setId(-1);
                 return failed;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             Courier failed = new Courier();
-            failed.setCourierId(-1);
+            failed.setId(-1);
             return failed;
         }
     }
@@ -65,11 +66,11 @@ public class CourierService {
 
     // Get couriers without pending packages
     public List<Courier> getAllCouriersWithoutPendingPackages() {
-        return courierRepository.findAllCouriersWithoutPendingPackages();
+        return courierRepository.findAllCouriersWithoutPendingPackages(PackageStatus.PENDING);
     }
 
     // Get all managers and delivered number
     public List<Object[]> getAllManagersAndDeliveredNumber() {
-        return courierRepository.findAllManagersAndDeliveredNumber();
+        return courierRepository.findAllManagersAndDeliveredNumber(PackageStatus.DELIVERED);
     }
 }

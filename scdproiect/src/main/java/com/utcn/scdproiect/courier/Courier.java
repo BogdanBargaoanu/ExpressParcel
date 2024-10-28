@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 public class Courier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer courierId;
+    private Integer id;
 
-    public Integer getCourierId() {
-        return courierId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCourierId(Integer courierId) {
-        this.courierId = courierId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Column(nullable = false)
@@ -43,14 +43,15 @@ public class Courier {
         this.email = email;
     }
 
-    @Column(nullable = false)
-    private Integer manager_id;
+    @ManyToOne
+    @JoinColumn(name = "manager_id", nullable = false)
+    private Courier manager;
 
-    public Integer getManager_id() {
-        return manager_id;
+    public Courier getManager() {
+        return manager;
     }
 
-    public void setManager_id(Integer manager_id) {
-        this.manager_id = manager_id;
+    public void setManager(Courier manager) {
+        this.manager = manager;
     }
 }

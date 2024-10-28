@@ -1,15 +1,21 @@
 package com.utcn.scdproiect.courier;
 
 import com.utcn.scdproiect.courier.Courier;
+import com.utcn.scdproiect.pkg.PackageStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface CourierRepository extends JpaRepository<Courier, Integer> {
-    @Query("SELECT * FROM Courier c WHERE c.courier_id NOT IN (SELECT p.courier_id FROM Package p WHERE p.status = 'PENDING')")
-    List<Courier> findAllCouriersWithoutPendingPackages();
+    // Find all couriers who have no packages with a specific status
+    @Query("SELECT c FROM Courier c WHERE c.id NOT IN (SELECT p.courier.id FROM Package p WHERE p.status = :status)")
+    List<Courier> findAllCouriersWithoutPendingPackages(@Param("status") PackageStatus status);
 
-    @Query("SELECT c.manager_id, COUNT(p.id) FROM package p JOIN courier c WHERE p.status = 'DELIVERED' GROUP BY c.manager_id")
-    List<Object[]> findAllManagersAndDeliveredNumber();
+    // Find all manager IDs and their corresponding number of delivered packages (based on status)
+    @Query("SELECT c.manager_id, COUNT(p) FROM Package p JOIN p.courier c WHERE p.status = :status GROUP BY c.manager_id")
+    List<Object[]> findAllManagersAndDeliveredNumber(@Param("status") PackageStatus status);
 }
