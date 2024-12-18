@@ -64,6 +64,30 @@ public class CourierService {
         }
     }
 
+    // Set manager for courier
+    @Transactional
+    public Courier setManagerForCourier(Integer courierId, Integer managerId) {
+        try {
+            Optional<Courier> courierOpt = courierRepository.findById(courierId);
+            Optional<Courier> managerOpt = courierRepository.findById(managerId);
+            if (courierOpt.isPresent() && managerOpt.isPresent()) {
+                Courier courier = courierOpt.get();
+                Courier manager = managerOpt.get();
+                courier.setManager(manager);
+                return courierRepository.save(courier);
+            } else {
+                Courier failed = new Courier();
+                failed.setId(-1);
+                return failed;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            Courier failed = new Courier();
+            failed.setId(-1);
+            return failed;
+        }
+    }
+
     // Get couriers without pending packages
     public List<Courier> getAllCouriersWithoutPendingPackages() {
         return courierRepository.findAllCouriersWithoutPendingPackages(PackageStatus.PENDING);

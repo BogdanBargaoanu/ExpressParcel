@@ -44,7 +44,7 @@ public class Courier {
     }
 
     @ManyToOne
-    @JoinColumn(name = "manager_id", nullable = false)
+    @JoinColumn(name = "manager_id", nullable = true)
     private Courier manager;
 
     public Courier getManager() {
