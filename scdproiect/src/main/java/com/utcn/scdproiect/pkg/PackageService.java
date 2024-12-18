@@ -61,6 +61,17 @@ public class PackageService {
         }
     }
 
+    // Deliver package
+    @Transactional
+    public Package deliverPackage(Integer id) {
+        return packageRepository.findById(id)
+                .map(existingPackage -> {
+                    existingPackage.setStatus(PackageStatus.DELIVERED);
+                    return packageRepository.save(existingPackage);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Package with ID " + id + " not found"));
+    }
+
     // Get packages for courier
     public List<Package> getPackagesForCourier(Integer courierId) {
         return packageRepository.findByCourierId(courierId);
