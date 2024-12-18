@@ -1,6 +1,7 @@
 package com.utcn.scdproiect.pkg;
 
 import com.utcn.scdproiect.courier.Courier;
+import com.utcn.scdproiect.mail.MailService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ import java.util.Optional;
 public class PackageService {
     @Autowired
     private PackageRepository packageRepository;
+
+    @Autowired
+    private MailService mailService;
 
     // GetAll
     public List<Package> getAllPackages() {
@@ -67,6 +71,11 @@ public class PackageService {
         return packageRepository.findById(id)
                 .map(existingPackage -> {
                     existingPackage.setStatus(PackageStatus.DELIVERED);
+                    mailService.sendEmail(
+                            existingPackage.getPackageEmail(),
+                            "Package Delivered",
+                            "Your package has been delivered."
+                    );
                     return packageRepository.save(existingPackage);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("Package with ID " + id + " not found"));
