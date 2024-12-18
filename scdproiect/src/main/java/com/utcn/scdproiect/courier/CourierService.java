@@ -2,6 +2,7 @@ package com.utcn.scdproiect.courier;
 
 import com.utcn.scdproiect.pkg.Package;
 import com.utcn.scdproiect.pkg.PackageStatus;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,25 +29,20 @@ public class CourierService {
     // Update
     @Transactional
     public Courier updateCourier(Integer id, Courier updatedCourier) {
-        try {
-            Optional<Courier> existingCourierOpt = courierRepository.findById(id);
-            if (existingCourierOpt.isPresent()) {
-                Courier existingCourier = existingCourierOpt.get();
-                existingCourier.setName(updatedCourier.getName());
-                existingCourier.setEmail(updatedCourier.getEmail());
-                existingCourier.setManager(updatedCourier.getManager());
-                return courierRepository.save(existingCourier);
-            } else {
-                Courier failed = new Courier();
-                failed.setId(-1);
-                return failed;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            Courier failed = new Courier();
-            failed.setId(-1);
-            return failed;
+        // Validate the input courier
+        if (updatedCourier == null) {
+            throw new IllegalArgumentException("Updated courier cannot be null");
         }
+
+        return courierRepository.findById(id)
+                .map(existingCourier -> {
+                    existingCourier.setName(updatedCourier.getName());
+                    existingCourier.setEmail(updatedCourier.getEmail());
+                    existingCourier.setPassword(updatedCourier.getPassword());
+                    existingCourier.setManager(updatedCourier.getManager());
+                    return courierRepository.save(existingCourier);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Courier with ID " + id + " not found"));
     }
 
     // Delete
@@ -67,25 +63,19 @@ public class CourierService {
     // Set manager for courier
     @Transactional
     public Courier setManagerForCourier(Integer courierId, Integer managerId) {
-        try {
-            Optional<Courier> courierOpt = courierRepository.findById(courierId);
-            Optional<Courier> managerOpt = courierRepository.findById(managerId);
-            if (courierOpt.isPresent() && managerOpt.isPresent()) {
-                Courier courier = courierOpt.get();
-                Courier manager = managerOpt.get();
-                courier.setManager(manager);
-                return courierRepository.save(courier);
-            } else {
-                Courier failed = new Courier();
-                failed.setId(-1);
-                return failed;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            Courier failed = new Courier();
-            failed.setId(-1);
-            return failed;
+        // Validate the input courier
+        if (courierId < 0 || managerId < 0) {
+            throw new IllegalArgumentException("Courier ID's cannot be negative");
         }
+        Courier manager = courierRepository.findById(managerId)
+                .orElseThrow(() -> new EntityNotFoundException("Manager with ID " + managerId + " not found"));
+
+        return courierRepository.findById(courierId)
+                .map(existingCourier -> {
+                    existingCourier.setManager(manager.getManager());
+                    return courierRepository.save(existingCourier);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Courier with ID " + courierId + " not found"));
     }
 
     // Get couriers without pending packages
