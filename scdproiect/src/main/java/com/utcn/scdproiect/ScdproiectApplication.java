@@ -9,5 +9,4 @@ public class ScdproiectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ScdproiectApplication.class, args);
 	}
-
 }

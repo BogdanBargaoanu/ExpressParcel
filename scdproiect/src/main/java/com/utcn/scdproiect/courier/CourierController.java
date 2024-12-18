@@ -33,6 +33,11 @@ public class CourierController {
         return courierService.deleteCourier(id);
     }
 
+    @PutMapping
+    public Courier setManagerForCourier(@RequestParam Integer courierId, @RequestParam Integer managerId) {
+        return courierService.setManagerForCourier(courierId, managerId);
+    }
+
     @GetMapping("/no-pending-packages")
     public List<Courier> getAllCouriersWithoutPendingPackages() {
         return courierService.getAllCouriersWithoutPendingPackages();

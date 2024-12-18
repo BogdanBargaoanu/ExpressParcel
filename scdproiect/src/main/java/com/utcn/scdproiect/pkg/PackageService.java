@@ -1,6 +1,8 @@
 package com.utcn.scdproiect.pkg;
 
 import com.utcn.scdproiect.courier.Courier;
+import com.utcn.scdproiect.mail.MailService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,9 @@ import java.util.Optional;
 public class PackageService {
     @Autowired
     private PackageRepository packageRepository;
+
+    @Autowired
+    private MailService mailService;
 
     // GetAll
     public List<Package> getAllPackages() {
@@ -27,26 +32,21 @@ public class PackageService {
     // Update
     @Transactional
     public Package updatePackage(Integer id, Package updatedPackage) {
-        try {
-            Optional<Package> existingPackageOpt = packageRepository.findById(id);
-            if (existingPackageOpt.isPresent()) {
-                Package existingPackage = existingPackageOpt.get();
-                existingPackage.setCourier(updatedPackage.getCourier());
-                existingPackage.setDeliveryAddress(updatedPackage.getDeliveryAddress());
-                existingPackage.setPayOnDelivery(updatedPackage.isPayOnDelivery());
-                existingPackage.setStatus(updatedPackage.getStatus());
-                return packageRepository.save(existingPackage);
-            } else {
-                Package failed = new Package();
-                failed.setId(-1);
-                return failed;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            Package failed = new Package();
-            failed.setId(-1);
-            return failed;
+        // Validate the input package
+        if (updatedPackage == null) {
+            throw new IllegalArgumentException("Updated package cannot be null");
         }
+
+        return packageRepository.findById(id)
+                .map(existingPackage -> {
+                    existingPackage.setCourier(updatedPackage.getCourier());
+                    existingPackage.setDeliveryAddress(updatedPackage.getDeliveryAddress());
+                    existingPackage.setPayOnDelivery(updatedPackage.isPayOnDelivery());
+                    existingPackage.setStatus(updatedPackage.getStatus());
+                    existingPackage.setPackageEmail(updatedPackage.getPackageEmail());
+                    return packageRepository.save(existingPackage);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Package with ID " + id + " not found"));
     }
 
     // Delete
@@ -63,6 +63,22 @@ public class PackageService {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+    // Deliver package
+    @Transactional
+    public Package deliverPackage(Integer id) {
+        return packageRepository.findById(id)
+                .map(existingPackage -> {
+                    existingPackage.setStatus(PackageStatus.DELIVERED);
+                    mailService.sendEmail(
+                            existingPackage.getPackageEmail(),
+                            "Package Delivered",
+                            "Your package has been delivered."
+                    );
+                    return packageRepository.save(existingPackage);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Package with ID " + id + " not found"));
     }
 
     // Get packages for courier

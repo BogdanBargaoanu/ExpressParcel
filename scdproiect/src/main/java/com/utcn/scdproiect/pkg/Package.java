@@ -60,6 +60,16 @@ public class Package {
         this.deliveryAddress = deliveryAddress;
     }
 
+    private String packageEmail;
+
+    public String getPackageEmail() {
+        return packageEmail;
+    }
+
+    public void setPackageEmail(String packageEmail) {
+        this.packageEmail = packageEmail;
+    }
+
     private boolean payOnDelivery;
 
     public boolean isPayOnDelivery() {
