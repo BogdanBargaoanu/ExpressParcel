@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import './Dashboard.css';
 import { useNavigate } from 'react-router-dom';
+import logo from '../Assets/logo.png';
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 const Dashboard = () => {
     return (
@@ -11,7 +13,7 @@ const Dashboard = () => {
 
                 {/* Header (Logo, menu) */}
                 <header>
-                    <a href="#"><img src="images/logo.png" className="logo" /> </a>
+                    <a href="#"><img src={logo} className="logo" /> </a>
                     <ul>
                         <li><a href="#">Home</a></li>
                         <li><a href="#">Track</a></li>
@@ -39,28 +41,29 @@ const Dashboard = () => {
 
                     {/* Right image box */}
                     <div className="imgBox">
-                        <img src="images/img1.png" className="starbucks" />
+                        <img src={logo} className="logo" />
                     </div>
                 </div>
                 {/* End middle content */}
 
-                {/* Bottom thumbnails */}
+                {/* Bottom thumbnails 
                 <ul className="bottom-thumbnails">
                     <li><img src="" /></li>
                     <li><img src="" /></li>
                     <li><img src="" /></li>
                 </ul>
+                */}
 
                 {/* Social links sidebar */}
                 <ul className="social-links">
                     <li>
-                        <a href="#"><img src="images/facebook.png" /></a>
+                        <a href="#"><FaFacebookF /></a>
                     </li>
                     <li>
-                        <a href="#"><img src="images/twitter.png" /></a>
+                        <a href="#"><FaInstagram /></a>
                     </li>
                     <li>
-                        <a href="#"><img src="images/instagram.png" /></a>
+                        <a href="#"><FaLinkedinIn /></a>
                     </li>
                 </ul>
             </section>

@@ -137,13 +137,14 @@ header ul li a {
 
 .social-links li {
   list-style: none;
+  font-size: 4rem;
 }
 
 .social-links li a {
   display: inline-block;
   margin: 5px 0;
   transform: scale(0.6);
-  filter: invert(1);
+  color: #ffffff;
 }
 
 .circle {
