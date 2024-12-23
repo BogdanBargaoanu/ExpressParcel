@@ -59,13 +59,13 @@ const Dashboard = () => {
                 {/* Social links sidebar */}
                 <ul className="social-links">
                     <li>
-                        <a href="#"><FaFacebookF /></a>
+                        <a href="#" className="social-link"><FaFacebookF /></a>
                     </li>
                     <li>
-                        <a href="#"><FaInstagram /></a>
+                        <a href="#" className="social-link"><FaInstagram /></a>
                     </li>
                     <li>
-                        <a href="#"><FaLinkedinIn /></a>
+                        <a href="#" className="social-link"><FaLinkedinIn /></a>
                     </li>
                 </ul>
             </section>
