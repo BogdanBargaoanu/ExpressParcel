@@ -25,7 +25,7 @@ const Dashboard = () => {
                 {/* Middle content */}
                 <div className="middle-content">
                     {/* Left side content */}
-                    <div className="textBox">
+                    <div className="main-description">
                         <h2>
                             Not your simple delivery solution<br />
                             <span>ExpressParcel</span>
@@ -39,9 +39,11 @@ const Dashboard = () => {
                         <a href="#">Learn More</a>
                     </div>
 
-                    {/* Right image box */}
-                    <div className="imgBox">
-                        <img src={logo} className="logo" />
+                    {/* Right search box */}
+                    <div className="search-box">
+                        <input type="text" className="awb-search" required />
+                        <div className="awb-label">Enter the AWB</div>
+                        <button className="track-btn" type="submit">Track</button>
                     </div>
                 </div>
                 {/* End middle content */}
@@ -57,13 +59,13 @@ const Dashboard = () => {
                 {/* Social links sidebar */}
                 <ul className="social-links">
                     <li>
-                        <a href="#"><FaFacebookF /></a>
+                        <a href="#" className="social-link"><FaFacebookF /></a>
                     </li>
                     <li>
-                        <a href="#"><FaInstagram /></a>
+                        <a href="#" className="social-link"><FaInstagram /></a>
                     </li>
                     <li>
-                        <a href="#"><FaLinkedinIn /></a>
+                        <a href="#" className="social-link"><FaLinkedinIn /></a>
                     </li>
                 </ul>
             </section>
