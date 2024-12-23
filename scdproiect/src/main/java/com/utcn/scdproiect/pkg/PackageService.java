@@ -44,6 +44,7 @@ public class PackageService {
                     existingPackage.setPayOnDelivery(updatedPackage.isPayOnDelivery());
                     existingPackage.setStatus(updatedPackage.getStatus());
                     existingPackage.setPackageEmail(updatedPackage.getPackageEmail());
+                    existingPackage.setAwb(updatedPackage.getAwb());
                     return packageRepository.save(existingPackage);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("Package with ID " + id + " not found"));
