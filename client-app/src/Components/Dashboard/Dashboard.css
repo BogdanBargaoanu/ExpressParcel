@@ -54,29 +54,29 @@ header ul li a {
   align-items: center;
 }
 
-.middle-content .textBox {
+.middle-content .main-description {
   position: relative;
   max-width: 600px;
 }
 
-.middle-content .textBox h2 {
+.middle-content .main-description h2 {
   color: #333;
   font-size: 4em;
   line-height: 1.4em;
   font-weight: 500;
 }
 
-.middle-content .textBox h2 span {
+.middle-content .main-description h2 span {
   color: var(--primary-color);
   font-size: 1.2eml;
   font-weight: 900;
 }
 
-.middle-content .textBox p {
+.middle-content .main-description p {
   color: #333;
 }
 
-.middle-content .textBox a {
+.middle-content .main-description a {
   display: inline-block;
   margin-top: 20px;
   padding: 8px 20px;
@@ -86,17 +86,43 @@ header ul li a {
   font-weight: 500;
   letter-spacing: 1px;
   text-decoration: none;
+  transition: transform 0.5s ease;
 }
 
-.middle-content .imgBox {
+.middle-content .main-description a:hover {
+  transform: translateY(-5px);
+}
+
+.track-btn {
+  position: relative;
+  margin-top: 100px;
+  padding: 8px 20px;
+  background: var(--primary-color);
+  color: #ffffff;
+  border-radius: 40px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-decoration: none;
+  border: none;
+  font-size: 1rem;
+  transition: transform 0.5s ease;
+}
+
+.track-btn:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
+}
+
+.middle-content .search-box {
   width: 600px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   padding-right: 50px;
   margin-top: 50px;
+  margin-right: 20%;
 }
 
-.middle-content .imgBox img {
+.middle-content .search-box img {
   max-width: 340px;
 }
 
@@ -155,4 +181,47 @@ header ul li a {
   height: 100%;
   background: var(--primary-color);
   clip-path: circle(600px at right 800px);
+}
+
+.search-box {
+  position: relative;
+}
+
+.awb-search {
+  position: absolute;
+  width: 80%;
+  outline: none;
+  font-size: 2.2rem;
+  padding: 0 30px;
+  line-height: 80px;
+  border-radius: 10px;
+  border: 2px solid var(--primary-color);
+  background: transparent;
+  transition: 0.1s ease;
+  z-index: 9999;
+}
+
+.awb-label {
+  position: absolute;
+  font-size: 1.6rem;
+  color: var(--primary-color);
+  padding: 0 25px;
+  margin: 20px 20px;
+  background-color: #ffffff;
+  transition: 0.2s ease;
+}
+
+.awb-search:focus,
+.awb-search:valid {
+  color: var(--primary-color);
+  border: 4px solid var(--primary-color);
+}
+
+.awb-search:focus + .awb-label,
+.awb-search:valid + .awb-label {
+  transform: translate(-20px, -35px) scale(0.88);
+  color: var(--primary-color);
+  height: 30px;
+  line-height: 30px;
+  z-index: 9999;
 }
