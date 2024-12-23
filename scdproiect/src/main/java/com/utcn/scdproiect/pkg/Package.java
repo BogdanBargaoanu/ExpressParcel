@@ -70,6 +70,16 @@ public class Package {
         this.packageEmail = packageEmail;
     }
 
+    private String awb;
+
+    public String getAwb() {
+        return awb;
+    }
+
+    public void setAwb(String awb) {
+        this.awb = awb;
+    }
+
     private boolean payOnDelivery;
 
     public boolean isPayOnDelivery() {
