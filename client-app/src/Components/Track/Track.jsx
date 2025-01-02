@@ -8,10 +8,34 @@ import './Track.css';
 const Track = () => {
     const navigate = useNavigate();
 
-    const [managers, setManagers] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [managersAndPackages, setManagersAndPackages] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    var data = React.useMemo(() => managers, [managers]);
+    const fetchManagersAndPackages = () => {
+        axios.get(`http://localhost:8083/couriers/delivered-by-managers`)
+            .then(response => {
+                console.log(response);
+                const transformedData = response.data.map(item => ({
+                    id: item[0],
+                    name: item[1],
+                    email: item[2],
+                    numberOfPackages: item[3]
+                }));
+                setManagersAndPackages(transformedData);
+                setIsLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+                setIsLoading(false);
+            });
+    };
+
+    useEffect(() => {
+        fetchManagersAndPackages();
+        setIsLoading(false);
+    }, []);
+
+    var data = React.useMemo(() => managersAndPackages, [managersAndPackages]);
     const columns = React.useMemo(
         () => [
             {
@@ -26,15 +50,19 @@ const Track = () => {
                 Header: "Email",
                 accessor: "email",
             },
+            {
+                Header: "Number of Packages",
+                accessor: "numberOfPackages",
+            }
         ],
         []
     );
 
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
+        useTable({ columns, data });
 
     return (
-        <div class="container-track">
+        <div className="container-track">
             <h1>Track</h1>
             <header>
                 <a href="#" onClick={(e) => { e.preventDefault(); navigate('/') }}><img src={logo} className="logo" /> </a>
