@@ -5,6 +5,8 @@ import logo from '../Assets/logo.png';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 const Dashboard = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="container-dashboard">
             <section className="dashboard-section">
@@ -13,9 +15,9 @@ const Dashboard = () => {
 
                 {/* Header (Logo, menu) */}
                 <header>
-                    <a href="#"><img src={logo} className="logo" /> </a>
+                    <a href="#" onClick={(e) => {e.preventDefault(); navigate('/')}}><img src={logo} className="logo" /> </a>
                     <ul>
-                        <li><a href="#">Home</a></li>
+                        <li><a href="#" onClick={(e) => {e.preventDefault(); navigate('/')}}>Home</a></li>
                         <li><a href="#">Track</a></li>
                         <li><a href="#">What's New</a></li>
                         <li><a href="#">Contact</a></li>
