@@ -5,6 +5,8 @@ import logo from '../Assets/logo.png';
 import axios from 'axios';
 import { FaTruckLoading, FaCalendarCheck } from "react-icons/fa";
 import { TbTruckDelivery } from "react-icons/tb";
+import { PiSmileySad } from "react-icons/pi";
+import { MdPersonPin } from "react-icons/md";
 import Skeleton from 'react-loading-skeleton';
 
 
@@ -114,9 +116,22 @@ const AwbTrack = () => {
                                     src={generateMapUrlFromAddress(packageData[0].deliveryAddress)}
                                 ></iframe>
                             </div>
+                            <div className="courier-info">
+                                <div className='inline'>
+                                    <span class='courier-icon'><MdPersonPin /></span>
+                                    <h2>Courier Information</h2>
+                                </div>
+                                <p><strong>Name:</strong> {packageData[0].courier.name}</p>
+                                <p><strong>Email:</strong> {packageData[0].courier.email}</p>
+                            </div>
                         </>
                     ) : (
-                        <h1 className="no-order-message">No order found with the provided AWB number.</h1>
+                        <>
+                            <h1 className="no-order-message">No order found with the provided AWB number.</h1>
+                            <div className="big-icon">
+                                <PiSmileySad />
+                            </div>
+                        </>
                     )}
                 </div>
             )}
