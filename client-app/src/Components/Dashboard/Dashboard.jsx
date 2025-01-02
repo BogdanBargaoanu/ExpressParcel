@@ -20,12 +20,12 @@ const Dashboard = () => {
 
                 {/* Header (Logo, menu) */}
                 <header>
-                    <a href="#" onClick={(e) => {e.preventDefault(); navigate('/')}}><img src={logo} className="logo" /> </a>
+                    <a href="#" onClick={(e) => { e.preventDefault(); navigate('/') }}><img src={logo} className="logo" /> </a>
                     <ul>
-                        <li><a href="#" onClick={(e) => {e.preventDefault(); navigate('/')}}>Home</a></li>
-                        <li><a href="#" onClick={(e) => {e.preventDefault(); navigate('/track')}}>Track</a></li>
-                        <li><a href="#" onClick={(e) => {e.preventDefault(); alert('To be added in the future...')}}>What's New</a></li>
-                        <li><a href="#" onClick={(e) => {e.preventDefault(); navigate('/contact')}}>Contact</a></li>
+                        <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/') }}>Home</a></li>
+                        <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/track') }}>Track</a></li>
+                        <li><a href="#" onClick={(e) => { e.preventDefault(); alert('To be added in the future...') }}>What's New</a></li>
+                        <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/contact') }}>Contact</a></li>
                     </ul>
                 </header>
 
@@ -48,7 +48,7 @@ const Dashboard = () => {
 
                     {/* Right search box */}
                     <div className="search-box">
-                        <input type="text" className="awb-search" required onChange={handleAwb}/>
+                        <input type="text" className="awb-search" required onChange={handleAwb} />
                         <div className="awb-label">Enter the AWB</div>
                         <button className="track-btn" onClick={() => navigate(`/awbtrack?awb=${awb}`)}>Track</button>
                     </div>

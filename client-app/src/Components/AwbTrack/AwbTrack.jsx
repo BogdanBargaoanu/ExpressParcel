@@ -64,7 +64,7 @@ const AwbTrack = () => {
     };
 
     return (
-        <div class="container-awbtrack">
+        <div className="container-awbtrack">
             {/* Header (Logo, menu) */}
             <header>
                 <a href="#" onClick={(e) => { e.preventDefault(); navigate('/') }}><img src={logo} className="logo" /> </a>
@@ -76,7 +76,6 @@ const AwbTrack = () => {
                 </ul>
             </header>
 
-            {/* Main content */}
             {/* Main content */}
             {isLoading ? (
                 <div className="awb-container">
@@ -118,11 +117,11 @@ const AwbTrack = () => {
                             </div>
                             <div className="courier-info">
                                 <div className='inline'>
-                                    <span class='courier-icon'><MdPersonPin /></span>
+                                    <span className='courier-icon'><MdPersonPin /></span>
                                     <h2>Courier Information</h2>
                                 </div>
-                                <p><strong>Name:</strong> {packageData[0].courier.name}</p>
-                                <p><strong>Email:</strong> {packageData[0].courier.email}</p>
+                                <p><strong>Name:</strong> {packageData[0]?.courier?.name || ''}</p>
+                                <p><strong>Email:</strong> {packageData[0]?.courier?.email || ''}</p>
                             </div>
                         </>
                     ) : (

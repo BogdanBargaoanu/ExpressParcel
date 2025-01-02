@@ -1,5 +1,6 @@
 package com.utcn.scdproiect.courier;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,6 +46,7 @@ public class Courier {
 
     @ManyToOne
     @JoinColumn(name = "manager_id", nullable = true)
+    @JsonIgnore
     private Courier manager;
 
     public Courier getManager() {

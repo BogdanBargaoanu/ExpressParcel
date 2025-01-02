@@ -1,5 +1,5 @@
 :root {
-    --primary-color: #9b0000;
+  --primary-color: #9b0000;
 }
 
 .dashboard-section {
@@ -236,8 +236,8 @@ header ul li a {
   border: 4px solid var(--primary-color);
 }
 
-.awb-search:focus + .awb-label,
-.awb-search:valid + .awb-label {
+.awb-search:focus+.awb-label,
+.awb-search:valid+.awb-label {
   transform: translate(-20px, -35px) scale(0.88);
   color: var(--primary-color);
   height: 30px;

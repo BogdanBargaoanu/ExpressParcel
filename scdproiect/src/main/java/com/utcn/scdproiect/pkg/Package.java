@@ -1,5 +1,6 @@
 package com.utcn.scdproiect.pkg;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.utcn.scdproiect.courier.Courier;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
