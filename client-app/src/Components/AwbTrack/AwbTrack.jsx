@@ -19,14 +19,10 @@ const AwbTrack = () => {
     const fetchPackage = useCallback((awb) => {
         console.log('fetching nearest rates');
         console.log(process.env.REACT_APP_API_KEY);
-        axios.get(`http://localhost:8083/packages`, {
+        axios.get(`http://localhost:8083/packages/find`, {
             params: {
                 awb: awb
             },
-            auth: {
-                username: 'user',
-                password: process.env.REACT_APP_API_KEY
-            }
         })
             .then(response => {
                 console.log(response);

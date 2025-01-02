@@ -7,7 +7,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/packages")
-@CrossOrigin
 public class PackageController {
     @Autowired
     private PackageService packageService;
@@ -20,7 +19,7 @@ public class PackageController {
     @GetMapping
     public List<Package> getAllPackages() { return packageService.getAllPackages(); }
 
-    @GetMapping("/{awb}")
+    @GetMapping("/find{awb}")
     public List<Package> getPackageByAwb(@PathVariable String awb) {
         return packageService.getPackageByAwb(awb);
     }
