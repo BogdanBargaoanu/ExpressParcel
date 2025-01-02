@@ -34,4 +34,9 @@ public class PackageController {
     public List<Package> getPackagesForCourier(@PathVariable Integer courierId) {
         return packageService.getPackagesForCourier(courierId);
     }
+
+    @PutMapping("/deliver/{id}")
+    public Package deliverPackage(@PathVariable Integer id) {
+        return packageService.deliverPackage(id);
+    }
 }
