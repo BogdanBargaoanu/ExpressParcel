@@ -64,15 +64,15 @@ const AwbTrack = () => {
     };
 
     return (
-        <div>
+        <div class="container-awbtrack">
             {/* Header (Logo, menu) */}
             <header>
                 <a href="#" onClick={(e) => { e.preventDefault(); navigate('/') }}><img src={logo} className="logo" /> </a>
                 <ul>
                     <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/') }}>Home</a></li>
-                    <li><a href="#">Track</a></li>
-                    <li><a href="#">What's New</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/track') }}>Track</a></li>
+                    <li><a href="#" onClick={(e) => { e.preventDefault(); alert('To be added in the future...') }}>What's New</a></li>
+                    <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/contact') }}>Contact</a></li>
                 </ul>
             </header>
 
