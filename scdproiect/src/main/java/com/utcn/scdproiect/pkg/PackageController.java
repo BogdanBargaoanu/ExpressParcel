@@ -20,6 +20,11 @@ public class PackageController {
     @GetMapping
     public List<Package> getAllPackages() { return packageService.getAllPackages(); }
 
+    @GetMapping("/{awb}")
+    public List<Package> getPackageByAwb(@PathVariable String awb) {
+        return packageService.getPackageByAwb(awb);
+    }
+
     @PutMapping("/{id}")
     public Package updatePackage(@PathVariable Integer id, @RequestBody Package updatedPackage) {
         return packageService.updatePackage(id, updatedPackage);
