@@ -63,7 +63,7 @@ const Track = () => {
 
     return (
         <div className="container-track">
-            <h1>Track</h1>
+            <h1 className='track-heading'>Track</h1>
             <header>
                 <a href="#" onClick={(e) => { e.preventDefault(); navigate('/') }}><img src={logo} className="logo" /> </a>
                 <ul>
