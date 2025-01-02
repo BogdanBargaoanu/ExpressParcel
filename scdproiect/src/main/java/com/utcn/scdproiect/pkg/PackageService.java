@@ -23,6 +23,11 @@ public class PackageService {
         return packageRepository.findAll();
     }
 
+    // Get By AWB
+    public List<Package> getPackageByAwb(String awb) {
+        return packageRepository.findByAwb(awb);
+    }
+
     // Create
     @Transactional
     public Package createPackage(Package newPackage) {

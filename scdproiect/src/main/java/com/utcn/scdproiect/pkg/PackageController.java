@@ -7,7 +7,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/packages")
-@CrossOrigin
 public class PackageController {
     @Autowired
     private PackageService packageService;
@@ -19,6 +18,11 @@ public class PackageController {
 
     @GetMapping
     public List<Package> getAllPackages() { return packageService.getAllPackages(); }
+
+    @GetMapping("/find{awb}")
+    public List<Package> getPackageByAwb(@PathVariable String awb) {
+        return packageService.getPackageByAwb(awb);
+    }
 
     @PutMapping("/{id}")
     public Package updatePackage(@PathVariable Integer id, @RequestBody Package updatedPackage) {
@@ -33,5 +37,10 @@ public class PackageController {
     @GetMapping("/courier/{courierId}")
     public List<Package> getPackagesForCourier(@PathVariable Integer courierId) {
         return packageService.getPackagesForCourier(courierId);
+    }
+
+    @PutMapping("/deliver/{id}")
+    public Package deliverPackage(@PathVariable Integer id) {
+        return packageService.deliverPackage(id);
     }
 }

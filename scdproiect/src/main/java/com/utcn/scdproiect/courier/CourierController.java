@@ -8,7 +8,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/couriers")
-@CrossOrigin
 public class CourierController {
     @Autowired
     private CourierService courierService;
