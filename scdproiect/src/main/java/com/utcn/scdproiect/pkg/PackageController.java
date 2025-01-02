@@ -1,6 +1,7 @@
 package com.utcn.scdproiect.pkg;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +20,8 @@ public class PackageController {
     @GetMapping
     public List<Package> getAllPackages() { return packageService.getAllPackages(); }
 
-    @GetMapping("/find{awb}")
-    public List<Package> getPackageByAwb(@PathVariable String awb) {
+    @GetMapping("/find")
+    public List<Package> getPackageByAwb(@RequestParam("awb") String awb) {
         return packageService.getPackageByAwb(awb);
     }
 
