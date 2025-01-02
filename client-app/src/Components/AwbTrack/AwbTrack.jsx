@@ -13,6 +13,7 @@ const AwbTrack = () => {
     const [awb, setAwb] = useState('');
     const [packageData, setPackageData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [status, setStatus] = useState('');
 
     useEffect(() => {
         if (queryParams.has('awb')) {
@@ -34,30 +35,31 @@ const AwbTrack = () => {
                 try {
                     var status = response.data[0].status;
                     console.log(status);
-                    if (status) {
-                        const statusElementId = `current-${status.toLowerCase()}`;
-                        const statusElement = document.getElementById(statusElementId);
-                        if (statusElement) {
-                            statusElement.classList.add('current-status');
-                        }
-                    }
+                    setStatus(status);
                 }
                 catch (error) {
                     console.error("Error parsing package data:", error);
                 }
-
+                setIsLoading(false);
             })
             .catch(error => {
                 console.error("Error fetching package:", error);
+                setIsLoading(false);
             });
     }, []);
 
     useEffect(() => {
         if (awb.length > 0) {
             fetchPackage(awb);
-            setIsLoading(false);
         }
     }, [awb, fetchPackage]);
+
+    const generateMapUrlFromAddress = (address) => {
+        if (address) {
+            return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(address)}&zoom=10&maptype=roadmap`;
+        }
+        return '';
+    };
 
     return (
         <div>
@@ -75,22 +77,31 @@ const AwbTrack = () => {
             {/* Main content */}
             {isLoading ? (<h1>Loading package...</h1>) : (
                 <div className="awb-container">
-                    {packageData != null > 0 ? (
+                    {packageData != null && packageData.length > 0 ? (
                         <>
                             <h1 className="awb-heading">Order status:</h1>
                             <div className="icon-container">
-                                <div id='current-new' className='status-icon'>
+                                <div id='current-new' className={`status-icon ${status === 'NEW' ? 'current-status' : ''}`}>
                                     <FaTruckLoading />
                                     <span className='new'>New</span>
                                 </div>
-                                <div id='current-pending' className='status-icon'>
+                                <div id='current-pending' className={`status-icon ${status === 'PENDING' ? 'current-status' : ''}`}>
                                     <TbTruckDelivery />
                                     <span className='pending'>Pending</span>
                                 </div>
-                                <div id='current-delivered' className='status-icon'>
+                                <div id='current-delivered' className={`status-icon ${status === 'DELIVERED' ? 'current-status' : ''}`}>
                                     <FaCalendarCheck />
                                     <span className='delivered'>Delivered</span>
                                 </div>
+                            </div>
+                            <div className="maps-wrapper">
+                                <iframe
+                                    width="100%"
+                                    height="300px"
+                                    loading="lazy"
+                                    allowFullScreen
+                                    src={generateMapUrlFromAddress(packageData[0].deliveryAddress)}
+                                ></iframe>
                             </div>
                         </>
                     ) : (

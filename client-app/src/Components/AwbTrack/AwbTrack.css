@@ -43,6 +43,16 @@
     color: var(--primary-color);
 }
 
+.maps-wrapper {
+    width: 50%;
+    margin-top: 2rem;
+}
+
+iframe {
+    border-radius: 2rem;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4);
+}
+
 /* Media query for smaller screens */
 @media (max-width: 768px) {
     .icon-container {
