@@ -5,6 +5,8 @@ import logo from '../Assets/logo.png';
 import axios from 'axios';
 import { FaTruckLoading, FaCalendarCheck } from "react-icons/fa";
 import { TbTruckDelivery } from "react-icons/tb";
+import Skeleton from 'react-loading-skeleton';
+
 
 const AwbTrack = () => {
     const navigate = useNavigate();
@@ -73,9 +75,20 @@ const AwbTrack = () => {
             </header>
 
             {/* Main content */}
-            {isLoading ? (<h1>Loading package...</h1>) : (
+            {/* Main content */}
+            {isLoading ? (
                 <div className="awb-container">
-                    {packageData != null && packageData.length > 0 ? (
+                    <Skeleton height={40} width={300} />
+                    <div className="icon-container">
+                        <Skeleton circle={true} height={100} width={100} />
+                        <Skeleton circle={true} height={100} width={100} />
+                        <Skeleton circle={true} height={100} width={100} />
+                    </div>
+                    <Skeleton height={300} width="100%" />
+                </div>
+            ) : (
+                <div className="awb-container">
+                    {packageData && packageData.length > 0 ? (
                         <>
                             <h1 className="awb-heading">Order status:</h1>
                             <div className="icon-container">
