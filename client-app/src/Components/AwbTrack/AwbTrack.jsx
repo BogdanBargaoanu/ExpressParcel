@@ -22,8 +22,6 @@ const AwbTrack = () => {
     }, [queryParams]);
 
     const fetchPackage = useCallback((awb) => {
-        console.log('fetching nearest rates');
-        console.log(process.env.REACT_APP_API_KEY);
         axios.get(`http://localhost:8083/packages/find`, {
             params: {
                 awb: awb
@@ -56,7 +54,7 @@ const AwbTrack = () => {
 
     const generateMapUrlFromAddress = (address) => {
         if (address) {
-            return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(address)}&zoom=10&maptype=roadmap`;
+            return `https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_API_KEY}&q=${encodeURIComponent(address)}&zoom=10&maptype=roadmap`;
         }
         return '';
     };
