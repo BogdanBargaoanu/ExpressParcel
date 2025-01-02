@@ -27,6 +27,11 @@ header {
 header .logo {
   position: relative;
   max-width: 80px;
+  transition: 0.5s ease;
+}
+
+header .logo:hover {
+  transform: translateY(-5px);
 }
 
 header ul {
@@ -36,6 +41,11 @@ header ul {
 
 header ul li {
   list-style: none;
+  transition: 0.5s ease;
+}
+
+header ul li:hover {
+  transform: translateY(-5px);
 }
 
 header ul li a {
