@@ -29,7 +29,6 @@ public class Package {
 
     @ManyToOne
     @JoinColumn(name = "courier_id", nullable = false)
-    @JsonIgnore
     private Courier courier;
 
     public Courier getCourier() {
