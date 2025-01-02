@@ -64,7 +64,7 @@ const AwbTrack = () => {
     };
 
     return (
-        <div>
+        <div class="container-awbtrack">
             {/* Header (Logo, menu) */}
             <header>
                 <a href="#" onClick={(e) => { e.preventDefault(); navigate('/') }}><img src={logo} className="logo" /> </a>
