@@ -8,6 +8,7 @@ const Couriers = () => {
     const { showToastMessage } = useToast();
     const [isLoading, setIsLoading] = useState(false);
     const [couriers, setCouriers] = useState([]);
+    const [idManager, setIdManager] = useState(null);
     const [isFormValidState, setIsFormValidState] = useState(false);
     const [currentCourier, setCurrentCourier] = useState({
         id: null,
@@ -52,6 +53,25 @@ const Couriers = () => {
     };
 
     const updateCourier = () => {
+    };
+
+    const updateManager = (managerId) => {
+        console.log(managerId);
+        console.log("Updating manager for courier: ", currentCourier);
+        axios.put(`http://localhost:8083/couriers`, null, {
+            params: {
+                courierId: currentCourier.id,
+                managerId: managerId
+            }
+        })
+            .then(response => {
+                console.log(response);
+                showToastMessage('Manager updated successfully');
+            })
+            .catch(error => {
+                console.error(error);
+                showToastMessage('Failed to update manager: ' + (error.response?.data?.error || 'Unknown error'));
+            });
     };
 
     const deleteCourier = (courier) => {
@@ -126,7 +146,7 @@ const Couriers = () => {
                 Header: "Actions",
                 Cell: ({ row }) => (
                     <div className='actions-container'>
-                        <button onClick={() => handleUpdate(row.original)} type="button" className="btn btn-danger btn-update-manager" data-bs-toggle="modal" data-bs-target="#modal-managers">
+                        <button onClick={() => { handleUpdate(row.original); setIdManager(null) }} type="button" className="btn btn-danger btn-update-manager" data-bs-toggle="modal" data-bs-target="#modal-managers">
                             Update manager
                         </button>
                         <button onClick={() => handleUpdate(row.original)} type="button" className="btn btn-danger btn-update" data-bs-toggle="modal" data-bs-target="#modal-couriers">
@@ -237,13 +257,13 @@ const Couriers = () => {
                         <div class="modal-body">
                             <select
                                 className="form-control rate-input"
-                                value={currentCourier.manager == null ? "" : currentCourier.manager.id}
-                                onChange={(e) => { setCurrentCourier({ ...currentCourier, manager: e.target.value }); validate() }}
+                                value={idManager == null ? "" : idManager}
+                                onChange={(e) => { setIdManager(e.target.value); validate() }}
                             >
                                 <option value="" disabled>Select a manager...</option>
                                 {couriers.map(courier => (
                                     <option key={courier.id} value={courier.id}>
-                                        { courier.name + " " + courier.email}
+                                        {courier.name + " " + courier.email}
                                     </option>
                                 ))}
                             </select>
@@ -256,7 +276,7 @@ const Couriers = () => {
                                 data-bs-dismiss={isFormValidState ? "modal" : undefined}
                                 onClick={() => {
                                     if (isFormValid()) {
-                                        updateCourier();
+                                        updateManager(idManager);
                                     } else {
                                         setIsFormValidState(false); // Set form validity state
                                     }
