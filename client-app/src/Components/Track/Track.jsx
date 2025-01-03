@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../Assets/logo.png';
 import axios from 'axios';
 import { useTable } from 'react-table'
@@ -75,7 +75,7 @@ const Track = () => {
             </header>
 
             <div id="managers-table" className="table-container">
-                {isLoading ? (<h1>Loading currencies...</h1>) : (<table {...getTableProps()}>
+                {isLoading ? (<h1>Loading managers...</h1>) : (<table {...getTableProps()}>
                     <thead>
                         {headerGroups.map((headerGroup) => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
