@@ -65,7 +65,7 @@ const Contact = () => {
                 </ul>
             </header>
 
-            <div id="managers-table" className="table-container">
+            <div id="couriers-table" className="table-container">
                 {isLoading ? (<h1>Loading available couriers...</h1>) : (<table {...getTableProps()}>
                     <thead>
                         {headerGroups.map((headerGroup) => (
