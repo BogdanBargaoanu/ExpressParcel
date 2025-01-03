@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,9 @@ public class CourierService {
     // Create
     @Transactional
     public Courier createCourier(Courier newCourier) {
+        if (courierRepository.existsByEmail(newCourier.getEmail())) {
+            throw new IllegalArgumentException("Courier with email " + newCourier.getEmail() + " already exists");
+        }
         return courierRepository.save(newCourier);
     }
 

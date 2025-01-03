@@ -5,7 +5,6 @@ import user_icon from '../Assets/person.png'
 import password_icon from '../Assets/password.png'
 import email_icon from '../Assets/email.png'
 import { useToast } from '../Context/Toast/ToastContext'
-import apiKey from '../../API-KEY.json'
 
 const LoginPage = () => {
     const [action, setAction] = useState("Login");
@@ -15,7 +14,6 @@ const LoginPage = () => {
     const { showToastMessage } = useToast();
 
     const handleLogin = () => {
-        console.log(apiKey);
         /* axios.post('http://localhost:3000/partners/login', {
              username: username,
              password: password
@@ -34,21 +32,18 @@ const LoginPage = () => {
     };
 
     const handleSignUp = () => {
-        const authHeader = 'Basic ' + btoa(`user:${apiKey.key}`);
+        console.log(name);
+        console.log(email);
+        console.log(password);
         axios.post('http://localhost:8083/couriers', {
             name: name,
             email: email,
             password: password,
-            manager_id: null,
-            information: `Registration date:${Date.now().toString()}`
-        },
-            {
-                headers: {
-                    'Authorization': authHeader
-                }
-            })
+            manager: null
+        })
             .then(response => {
-                if (response.data.success) {
+                console.log(response);
+                if (response.data.id) {
                     // The registration was successful
                     setName("");
                     setPassword("");
@@ -57,6 +52,7 @@ const LoginPage = () => {
                 }
             })
             .catch(error => {
+                console.log(error);
                 showToastMessage('Invalid registration: ' + (error.response?.data?.error || 'Unknown error'));
             });
     };
@@ -68,15 +64,15 @@ const LoginPage = () => {
             </div>
             <div className="inputs">
 
-                {action === "Login" ? <div></div> : <div className="input">
+                <div className="input">
                     <img src={email_icon} alt="" />
                     <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                </div>}
+                </div>
 
-                <div className="input">
+                {action === "Login" ? <div></div> : <div className="input">
                     <img src={user_icon} alt="" />
                     <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-                </div>
+                </div>}
 
                 <div className="input">
                     <img src={password_icon} alt="" />

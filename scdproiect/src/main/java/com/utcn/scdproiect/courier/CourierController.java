@@ -13,7 +13,7 @@ public class CourierController {
     private CourierService courierService;
 
     @PostMapping
-    public Courier createCourier(Courier newCourier) {
+    public Courier createCourier(@RequestBody Courier newCourier) {
         return courierService.createCourier(newCourier);
     }
 

@@ -1,6 +1,7 @@
 package com.utcn.scdproiect.courier;
 
 import com.utcn.scdproiect.courier.Courier;
+import com.utcn.scdproiect.pkg.Package;
 import com.utcn.scdproiect.pkg.PackageStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,7 @@ public interface CourierRepository extends JpaRepository<Courier, Integer> {
     // Find all manager IDs and their corresponding number of packages (based on status)
     @Query("SELECT c.manager.id AS id, c.manager.name AS name, c.manager.email AS email, COUNT(p) AS packages FROM Package p JOIN p.courier c WHERE p.status = :status AND c.manager.id IS NOT NULL GROUP BY c.manager.id")
     List<Object[]> findAllManagersAndDeliveredNumber(@Param("status") PackageStatus status);
+
+    // Check if a courier with a specific email exists
+    boolean existsByEmail(String email);
 }

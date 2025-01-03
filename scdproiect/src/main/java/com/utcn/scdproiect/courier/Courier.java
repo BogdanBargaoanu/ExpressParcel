@@ -1,5 +1,6 @@
 package com.utcn.scdproiect.courier;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,7 @@ public class Courier {
         this.name = name;
     }
 
+    @Column(nullable = false)
     private String email;
 
     public String getEmail() {
@@ -57,6 +59,7 @@ public class Courier {
         this.manager = manager;
     }
 
+    @Column(nullable = false)
     private String password;
 
     public String getPassword() {
