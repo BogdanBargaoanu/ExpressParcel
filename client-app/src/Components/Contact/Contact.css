@@ -1,0 +1,8 @@
+.contact-container {
+    margin-top: 7rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}

@@ -62,7 +62,7 @@ const Track = () => {
         useTable({ columns, data });
 
     return (
-        <div className="container-track">
+        <div className="track-container">
             <h1 className='track-heading'>Track</h1>
             <header>
                 <a href="#" onClick={(e) => { e.preventDefault(); navigate('/') }}><img src={logo} className="logo" /> </a>

@@ -50,10 +50,6 @@
   }
 }
 
-.btn-logout:hover {
-  transform: translateY(-5px);
-}
-
 .container-dashboard,
 .container-awbtrack,
 .container-track,

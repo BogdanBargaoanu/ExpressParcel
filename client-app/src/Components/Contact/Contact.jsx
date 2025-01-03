@@ -8,7 +8,7 @@ const Contact = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="container-track">
+        <div className="contact-container">
             <h1>Contact</h1>
             <header>
                 <a href="#" onClick={(e) => { e.preventDefault(); navigate('/') }}><img src={logo} className="logo" /> </a>
