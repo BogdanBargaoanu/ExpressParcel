@@ -35,3 +35,63 @@
     max-width: 1000px;
     line-height: 1.5;
 }
+
+.wrapper {
+    position: absolute;
+    font-size: 12rem;
+    bottom: 200px;
+    left: 0;
+    width: 100%;
+}
+
+.image {
+    position: absolute;
+}
+
+.image-truck {
+    right: 100%;
+    bottom: -140px;
+    z-index: 2;
+    animation: truck 6s linear infinite;
+}
+
+@keyframes truck {
+
+    0%,
+    30% {
+        left: 20%;
+    }
+
+    50%,
+    70% {
+        left: 50%;
+    }
+
+    100% {
+        left: 90%;
+    }
+}
+
+.image-package {
+    font-size: 6rem;
+    z-index: 1;
+    right: 50%;
+    animation: package 6s linear infinite;
+    opacity: 0;
+}
+
+@keyframes package {
+
+    20%, 50% {
+        opacity: 0;
+    }
+    60%,
+    80% {
+        opacity: 1;
+    }
+
+    80%,
+    100% {
+        opacity: 0;
+    }
+}
