@@ -8,7 +8,6 @@ const Couriers = () => {
     const { showToastMessage } = useToast();
     const [isLoading, setIsLoading] = useState(false);
     const [couriers, setCouriers] = useState([]);
-    const [selectCouriers, setSelectCouriers] = useState([]);
     const [isFormValidState, setIsFormValidState] = useState(false);
     const [currentCourier, setCurrentCourier] = useState({
         id: null,
@@ -23,7 +22,6 @@ const Couriers = () => {
             .then(response => {
                 console.log(response);
                 setCouriers(response.data);
-                setSelectCouriers(response.data);
                 setIsLoading(false);
             })
             .catch(error => {
@@ -53,6 +51,9 @@ const Couriers = () => {
         setCurrentCourier(courier);
     };
 
+    const updateCourier = () => {
+    };
+
     const deleteCourier = (courier) => {
         try {
             console.log(courier);
@@ -67,8 +68,7 @@ const Couriers = () => {
                 .then(response => {
                     console.log(response);
                     /* var newCouriers = couriers.filter(c => c.id !== courier.id);
-                    setCouriers(newCouriers);
-                    setSelectCouriers(newCouriers); */
+                    setCouriers(newCouriers); */
                     fetchCouriers();
                     showToastMessage('Courier deleted successfully');
                 })
@@ -126,7 +126,10 @@ const Couriers = () => {
                 Header: "Actions",
                 Cell: ({ row }) => (
                     <div className='actions-container'>
-                        <button onClick={() => handleUpdate(row.original)} type="button" className="btn btn-primary btn-update" data-bs-toggle="modal" data-bs-target="#modal-couriers">
+                        <button onClick={() => handleUpdate(row.original)} type="button" className="btn btn-danger btn-update-manager" data-bs-toggle="modal" data-bs-target="#modal-managers">
+                            Update manager
+                        </button>
+                        <button onClick={() => handleUpdate(row.original)} type="button" className="btn btn-danger btn-update" data-bs-toggle="modal" data-bs-target="#modal-couriers">
                             Update
                         </button>
                         <button className="btn-delete">
@@ -178,7 +181,7 @@ const Couriers = () => {
                 )}
             </div>
 
-            {/* Modal */}
+            {/* Modal couriers */}
             <div id="modal-couriers" class="modal" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -201,22 +204,59 @@ const Couriers = () => {
                                 onChange={(e) => { setCurrentCourier({ ...currentCourier, name: e.target.value }); validate() }}
                                 placeholder="Enter name"
                             />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button
+                                type="button"
+                                className="btn btn-danger"
+                                data-bs-dismiss={isFormValidState ? "modal" : undefined}
+                                onClick={() => {
+                                    if (isFormValid()) {
+                                        updateCourier();
+                                    } else {
+                                        setIsFormValidState(false); // Set form validity state
+                                    }
+                                }}
+                            >
+                                Save changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Modal managers */}
+            <div id="modal-managers" class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Manager for courier</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
                             <select
-                                className="form-control couriers-input"
-                                value={currentCourier.idLocation || ''}
+                                className="form-control rate-input"
+                                value={currentCourier.manager == null ? "" : currentCourier.manager.id}
                                 onChange={(e) => { setCurrentCourier({ ...currentCourier, manager: e.target.value }); validate() }}
                             >
+                                <option value="" disabled>Select a manager...</option>
+                                {couriers.map(courier => (
+                                    <option key={courier.id} value={courier.id}>
+                                        { courier.name + " " + courier.email}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button
                                 type="button"
-                                className="btn btn-primary"
+                                className="btn btn-danger"
                                 data-bs-dismiss={isFormValidState ? "modal" : undefined}
                                 onClick={() => {
                                     if (isFormValid()) {
-                                        // if (currentCourier.id !== null) updateCourier();
+                                        updateCourier();
                                     } else {
                                         setIsFormValidState(false); // Set form validity state
                                     }

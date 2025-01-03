@@ -6,3 +6,7 @@
     animation: slide-up-fade-in 0.5s ease;
     transition: transform 0.5s ease;
 }
+
+.btn-update-manager {
+    margin-right: 10px;
+}

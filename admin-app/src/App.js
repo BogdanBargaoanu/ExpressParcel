@@ -37,8 +37,8 @@ function AppContent() {
         </>
       )}
       <Routes>
-        <Route path="/" element={<PrivateRoute component={Dashboard} />} />
         <Route path="/login" element={<LoginRegister />} />
+        <Route path="/" element={<PrivateRoute component={Dashboard} />} />
         <Route path="/dashboard" element={<PrivateRoute component={Dashboard} />} />
         <Route path="/packages" element={<PrivateRoute component={Packages} />} />
         <Route path="/couriers" element={<PrivateRoute component={Couriers} />} />
