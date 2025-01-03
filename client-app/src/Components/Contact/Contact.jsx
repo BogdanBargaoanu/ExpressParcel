@@ -8,10 +8,28 @@ import './Contact.css';
 const Contact = () => {
     const navigate = useNavigate();
 
-    const [couriers, setCouriers] = useState([]);
+    const [availableCouriers, setAvailableCouriers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    var data = React.useMemo(() => couriers, [couriers]);
+    const fetchAvailableCouriers = () => {
+        axios.get(`http://localhost:8083/couriers/no-pending-packages`)
+            .then(response => {
+                console.log(response);
+                setAvailableCouriers(response.data);
+                setIsLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+                setIsLoading(false);
+            });
+    };
+
+    useEffect(() => {
+        fetchAvailableCouriers();
+        setIsLoading(false);
+    }, []);
+
+    var data = React.useMemo(() => availableCouriers, [availableCouriers]);
     const columns = React.useMemo(
         () => [
             {
