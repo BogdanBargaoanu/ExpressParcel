@@ -4,9 +4,11 @@ import './LoginRegister.css'
 import user_icon from '../Assets/person.png'
 import password_icon from '../Assets/password.png'
 import email_icon from '../Assets/email.png'
+import { useNavigate } from 'react-router-dom'
 import { useToast } from '../Context/Toast/ToastContext'
 
 const LoginPage = () => {
+    const navigate = useNavigate();
     const [action, setAction] = useState("Login");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
@@ -14,27 +16,24 @@ const LoginPage = () => {
     const { showToastMessage } = useToast();
 
     const handleLogin = () => {
-        /* axios.post('http://localhost:3000/partners/login', {
-             username: username,
-             password: password
-         })
-             .then(response => {
-                 if (response.data.success) {
-                     // The login was successful
-                     localStorage.setItem('user-token', response.data.token);
-                     window.location.href = '/dashboard';
-                 }
-             })
-             .catch(error => {
-                 showToastMessage('Invalid login: ' + (error.response?.data?.error || 'Unknown error'));
-             });
-             */
+        axios.post('http://localhost:8083/couriers/login', {
+            email: email,
+            password: password
+        })
+            .then(response => {
+                console.log(response);
+                if (response.data.id) {
+                    // The login was successful
+                    localStorage.setItem('user-token', "fictional-token");
+                    navigate('/dashboard');
+                }
+            })
+            .catch(error => {
+                showToastMessage('Invalid login: ' + (error.response?.data?.error || 'Unknown error'));
+            });
     };
 
     const handleSignUp = () => {
-        console.log(name);
-        console.log(email);
-        console.log(password);
         axios.post('http://localhost:8083/couriers', {
             name: name,
             email: email,

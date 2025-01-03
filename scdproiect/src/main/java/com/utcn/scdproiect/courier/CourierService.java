@@ -30,6 +30,12 @@ public class CourierService {
         return courierRepository.save(newCourier);
     }
 
+    // Login Courier
+    public Courier loginCourier(String email, String password) {
+        return courierRepository.findByEmailAndPassword(email, password)
+                .orElseThrow(() -> new EntityNotFoundException("Courier with email " + email + " and password " + password + " not found"));
+    }
+
     // Update
     @Transactional
     public Courier updateCourier(Integer id, Courier updatedCourier) {

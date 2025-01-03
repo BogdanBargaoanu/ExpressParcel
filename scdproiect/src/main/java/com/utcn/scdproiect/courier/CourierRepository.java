@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CourierRepository extends JpaRepository<Courier, Integer> {
     // Find all couriers who have no packages with a specific status
@@ -21,4 +22,8 @@ public interface CourierRepository extends JpaRepository<Courier, Integer> {
 
     // Check if a courier with a specific email exists
     boolean existsByEmail(String email);
+
+    // Find a courier by email and password
+    @Query("SELECT c FROM Courier c WHERE c.email = :email AND c.password = :password")
+    Optional<Courier> findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 }

@@ -1,6 +1,7 @@
 package com.utcn.scdproiect.courier;
 
 import com.utcn.scdproiect.pkg.Package;
+import com.utcn.scdproiect.utils.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,8 @@ public class CourierController {
         return courierService.updateCourier(id, updatedCourier);
     }
 
+
+
     @DeleteMapping("/{id}")
     public boolean deleteCourier(@PathVariable Integer id) {
         return courierService.deleteCourier(id);
@@ -45,5 +48,10 @@ public class CourierController {
     @GetMapping("/delivered-by-managers")
     public List<Object[]> getAllManagersAndDeliveredNumber() {
         return courierService.getAllManagersAndDeliveredNumber();
+    }
+
+    @PostMapping("/login")
+    public Courier loginCourier(@RequestBody LoginRequest loginRequest) {
+        return courierService.loginCourier(loginRequest.getEmail(), loginRequest.getPassword());
     }
 }
