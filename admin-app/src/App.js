@@ -3,11 +3,15 @@ import './App.css';
 import LoginRegister from './components/Login/LoginRegister';
 import Dashboard from './components/Dashboard/Dashboard';
 import Navbar from './components/Navbar/Navbar';
+import Packages from './components/Packages/Packages';
+import Couriers from './components/Couriers/Couriers';
 import PrivateRoute from './PrivateRoute';
 import logo from './components/Assets/logo.png';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import { ToastProvider } from './components/Context/Toast/ToastContext';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.bundle.js';
 
 function App() {
   return (
@@ -33,9 +37,11 @@ function AppContent() {
         </>
       )}
       <Routes>
-        <Route path="/" element={<PrivateRoute component={Dashboard} />} />
         <Route path="/login" element={<LoginRegister />} />
+        <Route path="/" element={<PrivateRoute component={Dashboard} />} />
         <Route path="/dashboard" element={<PrivateRoute component={Dashboard} />} />
+        <Route path="/packages" element={<PrivateRoute component={Packages} />} />
+        <Route path="/couriers" element={<PrivateRoute component={Couriers} />} />
         <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
     </>

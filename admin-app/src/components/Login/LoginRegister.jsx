@@ -32,7 +32,7 @@ const LoginPage = () => {
                 console.log(response);
                 if (response.data.id) {
                     // The login was successful
-                    localStorage.setItem('user-token', "fictional-token");
+                    localStorage.setItem('user-token', `fictional-token${response.data.id}`);
                     navigate('/dashboard');
                 }
             })

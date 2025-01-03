@@ -48,7 +48,7 @@ public class Courier {
 
     @ManyToOne
     @JoinColumn(name = "manager_id", nullable = true)
-    @JsonIgnore
+    @JsonBackReference
     private Courier manager;
 
     public Courier getManager() {
