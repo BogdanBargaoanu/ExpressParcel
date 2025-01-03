@@ -10,6 +10,8 @@ import logo from './components/Assets/logo.png';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import { ToastProvider } from './components/Context/Toast/ToastContext';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.bundle.js';
 
 function App() {
   return (
