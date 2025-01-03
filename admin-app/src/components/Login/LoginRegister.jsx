@@ -16,6 +16,14 @@ const LoginPage = () => {
     const { showToastMessage } = useToast();
 
     const handleLogin = () => {
+        if (email === "") {
+            showToastMessage('Email is required');
+            return;
+        }
+        if (password === "") {
+            showToastMessage('Password is required');
+            return;
+        }
         axios.post('http://localhost:8083/couriers/login', {
             email: email,
             password: password
@@ -34,6 +42,18 @@ const LoginPage = () => {
     };
 
     const handleSignUp = () => {
+        if (email === "") {
+            showToastMessage('Email is required');
+            return;
+        }
+        if (name === "") {
+            showToastMessage('Name is required');
+            return;
+        }
+        if (password === "") {
+            showToastMessage('Password is required');
+            return;
+        }
         axios.post('http://localhost:8083/couriers', {
             name: name,
             email: email,
@@ -44,6 +64,7 @@ const LoginPage = () => {
                 console.log(response);
                 if (response.data.id) {
                     // The registration was successful
+                    setEmail("");
                     setName("");
                     setPassword("");
                     showToastMessage('Registration successful. Please login.');
