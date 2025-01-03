@@ -8,6 +8,7 @@ const Couriers = () => {
     const { showToastMessage } = useToast();
     const [isLoading, setIsLoading] = useState(false);
     const [couriers, setCouriers] = useState([]);
+    const [selectCouriers, setSelectCouriers] = useState([]);
     const [isFormValidState, setIsFormValidState] = useState(false);
     const [currentCourier, setCurrentCourier] = useState({
         id: null,
@@ -16,6 +17,25 @@ const Couriers = () => {
         password: null,
         manager: null
     });
+
+    const fetchCouriers = () => {
+        axios.get(`http://localhost:8083/couriers`)
+            .then(response => {
+                console.log(response);
+                setCouriers(response.data);
+                setSelectCouriers(response.data);
+                setIsLoading(false);
+            })
+            .catch(error => {
+                console.error(error);
+                showToastMessage('Failed to fetch couriers: ' + (error.response?.data?.error || 'Unknown error'));
+                setIsLoading(false);
+            });
+    };
+
+    useEffect(() => {
+        fetchCouriers();
+    }, []);
 
     const resetCurrentCourier = () => {
         setCurrentCourier({
@@ -28,9 +48,39 @@ const Couriers = () => {
     };
 
     const handleUpdate = (courier) => {
+        setIsFormValidState(true); // Set form validity state
+        console.log("Button clicked for courier: ", courier);
+        setCurrentCourier(courier);
     };
 
     const deleteCourier = (courier) => {
+        try {
+            console.log(courier);
+            const token = localStorage.getItem('user-token');
+            const userId = token ? token.match(/\d+$/)[0] : null;
+            console.log(userId);
+            if (courier.id == userId) {
+                showToastMessage("You cannot delete yourself");
+                return;
+            }
+            axios.delete(`http://localhost:8083/couriers/${courier.id}`)
+                .then(response => {
+                    console.log(response);
+                    /* var newCouriers = couriers.filter(c => c.id !== courier.id);
+                    setCouriers(newCouriers);
+                    setSelectCouriers(newCouriers); */
+                    fetchCouriers();
+                    showToastMessage('Courier deleted successfully');
+                })
+                .catch(error => {
+                    console.error(error);
+                    showToastMessage('Failed to fetch couriers: ' + (error.response?.data?.error || 'Unknown error'));
+                });
+        }
+        catch (error) {
+            console.error(error);
+            showToastMessage('Failed to delete courier: ' + (error.response?.data?.error || 'Unknown error'));
+        }
     };
 
     const isFormValid = () => {
@@ -76,7 +126,7 @@ const Couriers = () => {
                 Header: "Actions",
                 Cell: ({ row }) => (
                     <div className='actions-container'>
-                        <button onClick={() => handleUpdate(row.original)} type="button" className="btn btn-primary btn-update" data-bs-toggle="modal" data-bs-target="#modal-rate">
+                        <button onClick={() => handleUpdate(row.original)} type="button" className="btn btn-primary btn-update" data-bs-toggle="modal" data-bs-target="#modal-couriers">
                             Update
                         </button>
                         <button className="btn-delete">
@@ -100,7 +150,7 @@ const Couriers = () => {
     return (
         <div className='couriers-container'>
             <div id="couriers-table" className="table-container">
-                {isLoading ? (<h1>Loading rates...</h1>) : (<table {...getTableProps()}>
+                {isLoading ? (<h1>Loading couriers...</h1>) : (<table {...getTableProps()}>
                     <thead>
                         {headerGroups.map((headerGroup) => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -129,11 +179,11 @@ const Couriers = () => {
             </div>
 
             {/* Modal */}
-            <div id="modal-rate" class="modal" tabindex="-1">
+            <div id="modal-couriers" class="modal" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Rate</h5>
+                            <h5 class="modal-title">Courier</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -142,14 +192,14 @@ const Couriers = () => {
                                 className="form-control couriers-input"
                                 value={currentCourier.email || null}
                                 onChange={(e) => { setCurrentCourier({ ...currentCourier, email: e.target.value }); validate() }}
-                                placeholder="Enter date"
+                                placeholder="Enter email"
                             />
                             <input
                                 type="text"
                                 className="form-control couriers-input"
-                                value={currentCourier.name !== null}
+                                value={currentCourier.name || null}
                                 onChange={(e) => { setCurrentCourier({ ...currentCourier, name: e.target.value }); validate() }}
-                                placeholder="Enter value"
+                                placeholder="Enter name"
                             />
                             <select
                                 className="form-control couriers-input"
@@ -166,7 +216,7 @@ const Couriers = () => {
                                 data-bs-dismiss={isFormValidState ? "modal" : undefined}
                                 onClick={() => {
                                     if (isFormValid()) {
-                                        //currentCourier.id === null ? insertRate() : updateRate();
+                                        // if (currentCourier.id !== null) updateCourier();
                                     } else {
                                         setIsFormValidState(false); // Set form validity state
                                     }
