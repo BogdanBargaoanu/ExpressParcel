@@ -1,5 +1,6 @@
 package com.utcn.scdproiect.mail;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -11,11 +12,14 @@ import java.util.Properties;
 public class MailConfig {
     @Bean
     public JavaMailSender javaMailSender() {
+        Dotenv dotenv = Dotenv.load();
+
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.example.com");
+        System.out.println(dotenv.get("SPRING_MAIL_HOST"));
+        mailSender.setHost(dotenv.get("SPRING_MAIL_HOST"));
         mailSender.setPort(587);
-        mailSender.setUsername(System.getenv("MAILJET_API_KEY"));
-        mailSender.setPassword(System.getenv("MAILJET_SECRET_KEY"));
+        mailSender.setUsername(dotenv.get("MAILJET_API_KEY"));
+        mailSender.setPassword(dotenv.get("MAILJET_SECRET_KEY"));
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

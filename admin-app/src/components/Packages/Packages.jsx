@@ -104,6 +104,27 @@ const Packages = () => {
     const updatePackage = (pack) => {
     };
 
+    const deliverPackage = (id) => {
+        const userConfirmed = window.confirm('Are you sure you want to deliver this package?');
+        
+        if (!userConfirmed) {
+            return
+        };
+        
+        axios.put(`http://localhost:8083/packages/deliver/${id}`)
+            .then(response => {
+                console.log(response);
+                /* var newPackages = packages.filter(p => p.id !== p.id);
+                setPackages(newpackages); */
+                fetchPackages();
+                showToastMessage('Package delivered successfully');
+            })
+            .catch(error => {
+                console.error(error);
+                showToastMessage('Failed to deliver package: ' + (error.response?.data?.error || 'Unknown error'));
+            });
+    };
+
     const deletePackage = (pack) => {
         console.log(pack);
         axios.delete(`http://localhost:8083/packages/${pack.id}`)
@@ -179,7 +200,7 @@ const Packages = () => {
                 Cell: ({ row }) => (
                     <div className='actions-container'>
                         {row.original.status == 'DELIVERED' ? (<div></div>) : (
-                            <button onClick={() => handleUpdate(row.original)} type="button" className="btn btn-danger btn-update-manager">
+                            <button onClick={() => deliverPackage(row.original.id)} type="button" className="btn btn-danger btn-update-manager">
                                 Deliver package
                             </button>
                         )}
