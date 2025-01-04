@@ -20,11 +20,49 @@ const Packages = () => {
         courier: null
     });
 
+    const handleInsertClick = () => {
+    };
+
     const handleUpdate = () => {
+    };
+
+    const updatePackage = (pack) => {
     };
 
     const deletePackage = (pack) => {
     };
+
+    const isFormValid = () => {
+        if (!currentPackage.id) {
+            showToastMessage("ID is required");
+            return false;
+        }
+        if (!currentPackage.awb) {
+            showToastMessage("AWB is required");
+            return false;
+        }
+        if (!currentPackage.delivery_address) {
+            showToastMessage("Delivery address is required");
+            return false;
+        }
+        if (!currentPackage.package_email) {
+            showToastMessage("Package email is required");
+            return false;
+        }
+        if (!currentPackage.pay_on_delivery) {
+            showToastMessage("Pay on delivery info is required");
+            return false;
+        }
+        if (!currentPackage.courier) {
+            showToastMessage("A courier is required");
+            return false;
+        }
+        return true;
+    }
+
+    const validate = () => {
+        setIsFormValidState(currentPackage.id && currentPackage.awb && currentPackage.delivery_address && currentPackage.package_email && currentPackage.pay_on_delivery && currentPackage.courier);
+    }
 
     var data = React.useMemo(() => packages, [packages]);
     const columns = React.useMemo(
@@ -103,6 +141,41 @@ const Packages = () => {
                 </table>
                 )}
             </div>
+
+            {/* Modal packages */}
+            <div id="modal-packages" class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Package</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button
+                                type="button"
+                                className="btn btn-danger"
+                                data-bs-dismiss={isFormValidState ? "modal" : undefined}
+                                onClick={() => {
+                                    if (isFormValid()) {
+                                        updatePackage();
+                                    } else {
+                                        setIsFormValidState(false); // Set form validity state
+                                    }
+                                }}
+                            >
+                                Save changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button onClick={() => handleInsertClick()} type="button" class="btn-insert" data-bs-toggle="modal" data-bs-target="#modal-packages">
+                Insert
+            </button>
         </div>
     )
 }
