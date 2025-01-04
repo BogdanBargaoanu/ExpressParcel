@@ -3,14 +3,16 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 import { RiTruckFill } from "react-icons/ri";
+import truck from '../Assets/truck.png';
+import pack from '../Assets/package.png';
 import { GoPackage } from "react-icons/go";
 
 const Contact = () => {
     return (
         <div>
             <div className='wrapper'>
-                <RiTruckFill className='image image-truck' />
-                <GoPackage className='image image-package' />
+                <img src={truck} alt='truck' className='image image-truck' />
+                <img src={pack} alt='package' className='image image-package' />
             </div>
             <div className='dashboard-container'>
                 <div className="dashboard-content">
