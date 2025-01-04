@@ -95,3 +95,30 @@
         opacity: 0;
     }
 }
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+
+    .dashboard-header {
+        font-size: 2rem;
+    }
+
+    .dashboard-description {
+        font-size: 1rem;
+    }
+
+    .wrapper {
+        bottom: 100px;
+    }
+
+    .image-truck {
+        width: 100px;
+        bottom: -80px;
+    }
+
+    .image-package {
+        width: 30px;
+    }
+}

@@ -44,6 +44,7 @@ function AppContent() {
         <Route path="/couriers" element={<PrivateRoute component={Couriers} />} />
         <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
+
     </>
   );
 }
