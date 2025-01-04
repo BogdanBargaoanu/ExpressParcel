@@ -90,17 +90,34 @@ const Packages = () => {
     }, []);
 
     const handleInsertClick = () => {
-        setIsFormValidState(false);
         resetCurrentPackage();
+        console.log(currentPackage);
+        setIsFormValidState(false);
     };
 
-    const handleUpdate = () => {
+    const handleUpdate = (pack) => {
+        setIsFormValidState(true);
+        console.log("Updating package:", pack);
+        setCurrentPackage(pack);
     };
 
     const updatePackage = (pack) => {
     };
 
     const deletePackage = (pack) => {
+        console.log(pack);
+        axios.delete(`http://localhost:8083/packages/${pack.id}`)
+            .then(response => {
+                console.log(response);
+                /* var newPackages = packages.filter(p => p.id !== p.id);
+                setPackages(newpackages); */
+                fetchPackages();
+                showToastMessage('Package deleted successfully');
+            })
+            .catch(error => {
+                console.error(error);
+                showToastMessage('Failed to delete package: ' + (error.response?.data?.error || 'Unknown error'));
+            });
     };
 
     const isFormValid = () => {
@@ -161,10 +178,13 @@ const Packages = () => {
                 Header: "Actions",
                 Cell: ({ row }) => (
                     <div className='actions-container'>
-                        <button onClick={() => handleUpdate(row.original)} type="button" className="btn btn-danger btn-update-manager" data-bs-toggle="modal" data-bs-target="#modal-managers">
-                            Update manager
-                        </button>
-                        <button onClick={() => handleUpdate(row.original)} type="button" className="btn btn-danger btn-update" data-bs-toggle="modal" data-bs-target="#modal-couriers">
+                        {row.original.status == 'DELIVERED' ? (<div></div>) : (
+                            <button onClick={() => handleUpdate(row.original)} type="button" className="btn btn-danger btn-update-manager">
+                                Deliver package
+                            </button>
+                        )}
+
+                        <button onClick={() => handleUpdate(row.original)} type="button" className="btn btn-danger btn-update" data-bs-toggle="modal" data-bs-target="#modal-packages">
                             Update
                         </button>
                         <button className="btn-delete">
@@ -228,21 +248,21 @@ const Packages = () => {
                             <input
                                 type="text"
                                 className="form-control packages-input"
-                                value={currentPackage.awb || null}
+                                value={currentPackage.awb || ''}
                                 onChange={(e) => { setCurrentPackage({ ...currentPackage, awb: e.target.value }); validate() }}
                                 placeholder="Enter AWB"
                             />
                             <input
                                 type="text"
                                 className="form-control packages-input"
-                                value={currentPackage.deliveryAddress || null}
+                                value={currentPackage.deliveryAddress || ''}
                                 onChange={(e) => { setCurrentPackage({ ...currentPackage, deliveryAddress: e.target.value }); validate() }}
                                 placeholder="Enter delivery address"
                             />
                             <input
                                 type="text"
                                 className="form-control packages-input"
-                                value={currentPackage.packageEmail || null}
+                                value={currentPackage.packageEmail || ''}
                                 onChange={(e) => { setCurrentPackage({ ...currentPackage, packageEmail: e.target.value }); validate() }}
                                 placeholder="Enter package email"
                             />
