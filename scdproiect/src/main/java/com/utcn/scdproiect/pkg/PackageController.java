@@ -13,7 +13,7 @@ public class PackageController {
     private PackageService packageService;
 
     @PostMapping
-    public Package createPackage(Package newPackage) {
+    public Package createPackage(@RequestBody Package newPackage) {
         return packageService.createPackage(newPackage);
     }
 

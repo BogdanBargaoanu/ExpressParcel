@@ -13,13 +13,26 @@ const Packages = () => {
     const [currentPackage, setCurrentPackage] = useState({
         id: null,
         awb: null,
-        created_on: null,
-        delivery_address: null,
-        package_email: null,
-        pay_on_delivery: null,
+        createdOn: null,
+        deliveryAddress: null,
+        packageEmail: null,
+        payOnDelivery: null,
         status: null,
         courier: null
     });
+
+    const resetCurrentPackage = () => {
+        setCurrentPackage({
+            id: null,
+            awb: null,
+            createdOn: null,
+            deliveryAddress: null,
+            packageEmail: null,
+            payOnDelivery: null,
+            status: null,
+            courier: null
+        });
+    };
 
     const fetchCouriers = () => {
         axios.get(`http://localhost:8083/couriers`)
@@ -33,11 +46,36 @@ const Packages = () => {
             });
     };
 
+    const insertPackage = () => {
+        currentPackage.createdOn = new Date().toISOString();
+        console.log("Inserting new package:", currentPackage);
+        axios.post(`http://localhost:8083/packages`, {
+            awb: currentPackage.awb,
+            createdOn: currentPackage.createdOn,
+            deliveryAddress: currentPackage.deliveryAddress,
+            packageEmail: currentPackage.packageEmail,
+            payOnDelivery: currentPackage.payOnDelivery,
+            status: currentPackage.status,
+            courier: currentPackage.courier
+        })
+            .then(response => {
+                console.log(response);
+                showToastMessage('Package inserted successfully');
+            })
+            .catch(error => {
+                console.error(error);
+                showToastMessage('Failed to insert package: ' + (error.response?.data?.error || 'Unknown error'));
+            });
+        resetCurrentPackage();
+    };
+
     useEffect(() => {
         fetchCouriers();
     }, []);
 
     const handleInsertClick = () => {
+        setIsFormValidState(false);
+        resetCurrentPackage();
     };
 
     const handleUpdate = () => {
@@ -50,23 +88,19 @@ const Packages = () => {
     };
 
     const isFormValid = () => {
-        if (!currentPackage.id) {
-            showToastMessage("ID is required");
-            return false;
-        }
         if (!currentPackage.awb) {
             showToastMessage("AWB is required");
             return false;
         }
-        if (!currentPackage.delivery_address) {
+        if (!currentPackage.deliveryAddress) {
             showToastMessage("Delivery address is required");
             return false;
         }
-        if (!currentPackage.package_email) {
+        if (!currentPackage.packageEmail) {
             showToastMessage("Package email is required");
             return false;
         }
-        if (!currentPackage.pay_on_delivery) {
+        if (!currentPackage.payOnDelivery) {
             showToastMessage("Pay on delivery info is required");
             return false;
         }
@@ -78,7 +112,7 @@ const Packages = () => {
     }
 
     const validate = () => {
-        setIsFormValidState(currentPackage.id && currentPackage.awb && currentPackage.delivery_address && currentPackage.package_email && currentPackage.pay_on_delivery && currentPackage.courier);
+        setIsFormValidState(currentPackage.id && currentPackage.awb && currentPackage.deliveryAddress && currentPackage.packageEmail && currentPackage.payOnDelivery && currentPackage.courier);
     }
 
     const generateMapUrlFromAddress = (address) => {
@@ -101,7 +135,7 @@ const Packages = () => {
             },
             {
                 Header: "Email",
-                accessor: "package_email",
+                accessor: "packageEmail",
             },
             {
                 Header: "Status",
@@ -185,24 +219,24 @@ const Packages = () => {
                             <input
                                 type="text"
                                 className="form-control packages-input"
-                                value={currentPackage.delivery_address || null}
-                                onChange={(e) => { setCurrentPackage({ ...currentPackage, delivery_address: e.target.value }); validate() }}
+                                value={currentPackage.deliveryAddress || null}
+                                onChange={(e) => { setCurrentPackage({ ...currentPackage, deliveryAddress: e.target.value }); validate() }}
                                 placeholder="Enter delivery address"
                             />
                             <input
                                 type="text"
                                 className="form-control packages-input"
-                                value={currentPackage.package_email || null}
-                                onChange={(e) => { setCurrentPackage({ ...currentPackage, package_email: e.target.value }); validate() }}
+                                value={currentPackage.packageEmail || null}
+                                onChange={(e) => { setCurrentPackage({ ...currentPackage, packageEmail: e.target.value }); validate() }}
                                 placeholder="Enter package email"
                             />
                             <div class="form-check packages-input">
                                 <input
                                     className="form-check-input"
                                     type="checkbox"
-                                    value={currentPackage.pay_on_delivery || null}
+                                    value={currentPackage.payOnDelivery || null}
                                     id="flexCheckDefault"
-                                    onChange={(e) => { setCurrentPackage({ ...currentPackage, pay_on_delivery: e.target.checked }); validate(); console.log(currentPackage) }}
+                                    onChange={(e) => { setCurrentPackage({ ...currentPackage, payOnDelivery: e.target.checked }); validate(); console.log(currentPackage) }}
                                 />
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Pay on delivery
@@ -242,7 +276,7 @@ const Packages = () => {
                                     height="300px"
                                     loading="lazy"
                                     allowFullScreen
-                                    src={generateMapUrlFromAddress(currentPackage.delivery_address)}
+                                    src={generateMapUrlFromAddress(currentPackage.deliveryAddress)}
                                 ></iframe>
                             </div>
                         </div>
@@ -254,7 +288,7 @@ const Packages = () => {
                                 data-bs-dismiss={isFormValidState ? "modal" : undefined}
                                 onClick={() => {
                                     if (isFormValid()) {
-                                        updatePackage();
+                                        currentPackage.id !== null ? updatePackage() : insertPackage();
                                     } else {
                                         setIsFormValidState(false); // Set form validity state
                                     }
