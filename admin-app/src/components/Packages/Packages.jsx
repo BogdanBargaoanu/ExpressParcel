@@ -34,6 +34,20 @@ const Packages = () => {
         });
     };
 
+    const fetchPackages = () => {
+        axios.get(`http://localhost:8083/packages`)
+            .then(response => {
+                console.log(response);
+                setPackages(response.data);
+                setIsLoading(false);
+            })
+            .catch(error => {
+                console.error(error);
+                showToastMessage('Failed to fetch packages: ' + (error.response?.data?.error || 'Unknown error'));
+                setIsLoading(false);
+            });
+    };
+
     const fetchCouriers = () => {
         axios.get(`http://localhost:8083/couriers`)
             .then(response => {
@@ -60,6 +74,7 @@ const Packages = () => {
         })
             .then(response => {
                 console.log(response);
+                fetchPackages();
                 showToastMessage('Package inserted successfully');
             })
             .catch(error => {
@@ -71,6 +86,7 @@ const Packages = () => {
 
     useEffect(() => {
         fetchCouriers();
+        fetchPackages();
     }, []);
 
     const handleInsertClick = () => {
@@ -214,7 +230,7 @@ const Packages = () => {
                                 className="form-control packages-input"
                                 value={currentPackage.awb || null}
                                 onChange={(e) => { setCurrentPackage({ ...currentPackage, awb: e.target.value }); validate() }}
-                                placeholder="Enter email"
+                                placeholder="Enter AWB"
                             />
                             <input
                                 type="text"
