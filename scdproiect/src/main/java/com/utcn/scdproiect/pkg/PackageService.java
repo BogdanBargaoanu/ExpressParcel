@@ -80,7 +80,7 @@ public class PackageService {
                     mailService.sendEmail(
                             existingPackage.getPackageEmail(),
                             "Package Delivered",
-                            "Your package has been delivered."
+                            "Your package has been delivered." + existingPackage.getAwb() + " has been delivered to " + existingPackage.getDeliveryAddress()
                     );
                     return packageRepository.save(existingPackage);
                 })

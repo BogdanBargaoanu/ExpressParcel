@@ -91,6 +91,7 @@ const Packages = () => {
 
     const handleInsertClick = () => {
         resetCurrentPackage();
+        currentPackage.payOnDelivery = false;
         console.log(currentPackage);
         setIsFormValidState(false);
     };
@@ -114,7 +115,7 @@ const Packages = () => {
         })
             .then(response => {
                 console.log(response);
-                fetchCouriers();
+                fetchPackages();
                 showToastMessage('Package updated successfully');
             })
             .catch(error => {
@@ -174,7 +175,7 @@ const Packages = () => {
             showToastMessage("Package email is required");
             return false;
         }
-        if (currentPackage.payOnDelivery != null) {
+        if (currentPackage.payOnDelivery == null) {
             showToastMessage("Pay on delivery info is required");
             return false;
         }
@@ -325,14 +326,14 @@ const Packages = () => {
                                 onChange={(e) => { setCurrentPackage({ ...currentPackage, status: e.target.value }); validate() }}
                             >
                                 <option value="" disabled>Select a status...</option>
-                                <option key='0' value='0'>
-                                    New
+                                <option key='0' value='NEW'>
+                                    NEW
                                 </option>
-                                <option key='1' value='1'>
-                                    Pending
+                                <option key='1' value='PENDING'>
+                                    PENDING
                                 </option>
-                                <option key='2' value='2'>
-                                    Delivered
+                                <option key='2' value='DELIVERED'>
+                                    DELIVERED
                                 </option>
                             </select>
                             <select

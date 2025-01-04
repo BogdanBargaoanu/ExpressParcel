@@ -15,11 +15,10 @@ public class MailConfig {
         Dotenv dotenv = Dotenv.load();
 
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        System.out.println(dotenv.get("SPRING_MAIL_HOST"));
-        mailSender.setHost(dotenv.get("SPRING_MAIL_HOST"));
+        mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername(dotenv.get("MAILJET_API_KEY"));
-        mailSender.setPassword(dotenv.get("MAILJET_SECRET_KEY"));
+        mailSender.setUsername("bnbba19@gmail.com");
+        mailSender.setPassword(dotenv.get("GMAIL_PASS"));
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
