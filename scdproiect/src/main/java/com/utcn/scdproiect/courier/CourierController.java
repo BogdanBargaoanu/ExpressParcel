@@ -28,8 +28,6 @@ public class CourierController {
         return courierService.updateCourier(id, updatedCourier);
     }
 
-
-
     @DeleteMapping("/{id}")
     public boolean deleteCourier(@PathVariable Integer id) {
         return courierService.deleteCourier(id);

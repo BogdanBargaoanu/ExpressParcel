@@ -74,15 +74,15 @@ public class CourierService {
     @Transactional
     public Courier setManagerForCourier(Integer courierId, Integer managerId) {
         // Validate the input courier
-        if (courierId < 0 || managerId < 0) {
-            throw new IllegalArgumentException("Courier ID's cannot be negative");
+        if (courierId < 0 || managerId < 0 || courierId.equals(managerId)) {
+            throw new IllegalArgumentException("Courier ID's cannot be negative or equal");
         }
         Courier manager = courierRepository.findById(managerId)
                 .orElseThrow(() -> new EntityNotFoundException("Manager with ID " + managerId + " not found"));
 
         return courierRepository.findById(courierId)
                 .map(existingCourier -> {
-                    existingCourier.setManager(manager.getManager());
+                    existingCourier.setManager(manager);
                     return courierRepository.save(existingCourier);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("Courier with ID " + courierId + " not found"));

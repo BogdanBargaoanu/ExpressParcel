@@ -44,15 +44,32 @@ const Couriers = () => {
             password: null,
             manager: null
         });
+        setIdManager(null);
     };
 
     const handleUpdate = (courier) => {
-        setIsFormValidState(true); // Set form validity state
+        setIsFormValidState(true);
         console.log("Button clicked for courier: ", courier);
         setCurrentCourier(courier);
     };
 
     const updateCourier = () => {
+        console.log("Updating courier: ", currentCourier);
+        axios.put(`http://localhost:8083/couriers/${currentCourier.id}`, {
+            email: currentCourier.email,
+            name: currentCourier.name,
+            password: currentCourier.password
+        })
+            .then(response => {
+                console.log(response);
+                fetchCouriers();
+                showToastMessage('Courier updated successfully');
+            })
+            .catch(error => {
+                console.error(error);
+                showToastMessage('Failed to update courier: ' + (error.response?.data?.error || 'Unknown error'));
+            });
+        resetCurrentCourier();
     };
 
     const updateManager = (managerId) => {
@@ -72,6 +89,7 @@ const Couriers = () => {
                 console.error(error);
                 showToastMessage('Failed to update manager: ' + (error.response?.data?.error || 'Unknown error'));
             });
+        resetCurrentCourier();
     };
 
     const deleteCourier = (courier) => {
@@ -94,7 +112,7 @@ const Couriers = () => {
                 })
                 .catch(error => {
                     console.error(error);
-                    showToastMessage('Failed to fetch couriers: ' + (error.response?.data?.error || 'Unknown error'));
+                    showToastMessage('Failed to delete courier: ' + (error.response?.data?.error || 'Unknown error'));
                 });
         }
         catch (error) {
@@ -123,9 +141,21 @@ const Couriers = () => {
         return true;
     }
 
+    const isFormValidManager = () => {
+        if (!idManager) {
+            showToastMessage("Manager is required");
+            return false;
+        }
+        return true;
+    }
+
     const validate = () => {
         setIsFormValidState(currentCourier.id && currentCourier.email && currentCourier.name && currentCourier.password);
     }
+
+    const validateManager = () => {
+        setIsFormValidState(idManager != null);
+    };
 
     var data = React.useMemo(() => couriers, [couriers]);
     const columns = React.useMemo(
@@ -257,8 +287,8 @@ const Couriers = () => {
                         <div class="modal-body">
                             <select
                                 className="form-control rate-input"
-                                value={idManager == null ? "" : idManager}
-                                onChange={(e) => { setIdManager(e.target.value); validate() }}
+                                value={currentCourier.manager == null ? "" : currentCourier.manager.id}
+                                onChange={(e) => { setIdManager(e.target.value); validateManager() }}
                             >
                                 <option value="" disabled>Select a manager...</option>
                                 {couriers.map(courier => (
@@ -275,7 +305,7 @@ const Couriers = () => {
                                 className="btn btn-danger"
                                 data-bs-dismiss={isFormValidState ? "modal" : undefined}
                                 onClick={() => {
-                                    if (isFormValid()) {
+                                    if (isFormValidManager()) {
                                         updateManager(idManager);
                                     } else {
                                         setIsFormValidState(false); // Set form validity state
