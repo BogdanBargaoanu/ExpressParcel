@@ -101,7 +101,27 @@ const Packages = () => {
         setCurrentPackage(pack);
     };
 
-    const updatePackage = (pack) => {
+    const updatePackage = () => {
+        console.log("Updating package: ", currentPackage);
+        axios.put(`http://localhost:8083/packages/${currentPackage.id}`, {
+            awb: currentPackage.awb,
+            createdOn: currentPackage.createdOn,
+            deliveryAddress: currentPackage.deliveryAddress,
+            packageEmail: currentPackage.packageEmail,
+            payOnDelivery: currentPackage.payOnDelivery,
+            status: currentPackage.status,
+            courier: currentPackage.courier
+        })
+            .then(response => {
+                console.log(response);
+                fetchCouriers();
+                showToastMessage('Package updated successfully');
+            })
+            .catch(error => {
+                console.error(error);
+                showToastMessage('Failed to update package: ' + (error.response?.data?.error || 'Unknown error'));
+            });
+        resetCurrentPackage();
     };
 
     const deliverPackage = (id) => {
@@ -110,7 +130,7 @@ const Packages = () => {
         if (!userConfirmed) {
             return
         };
-        
+
         axios.put(`http://localhost:8083/packages/deliver/${id}`)
             .then(response => {
                 console.log(response);
@@ -154,7 +174,7 @@ const Packages = () => {
             showToastMessage("Package email is required");
             return false;
         }
-        if (!currentPackage.payOnDelivery) {
+        if (currentPackage.payOnDelivery != null) {
             showToastMessage("Pay on delivery info is required");
             return false;
         }
