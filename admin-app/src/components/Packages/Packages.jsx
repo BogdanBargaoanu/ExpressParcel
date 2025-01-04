@@ -8,6 +8,7 @@ const Packages = () => {
     const { showToastMessage } = useToast();
     const [isLoading, setIsLoading] = useState(false);
     const [packages, setPackages] = useState([]);
+    const [couriers, setCouriers] = useState([]);
     const [isFormValidState, setIsFormValidState] = useState(false);
     const [currentPackage, setCurrentPackage] = useState({
         id: null,
@@ -19,6 +20,22 @@ const Packages = () => {
         status: null,
         courier: null
     });
+
+    const fetchCouriers = () => {
+        axios.get(`http://localhost:8083/couriers`)
+            .then(response => {
+                console.log(response);
+                setCouriers(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+                showToastMessage('Failed to fetch couriers: ' + (error.response?.data?.error || 'Unknown error'));
+            });
+    };
+
+    useEffect(() => {
+        fetchCouriers();
+    }, []);
 
     const handleInsertClick = () => {
     };
@@ -63,6 +80,13 @@ const Packages = () => {
     const validate = () => {
         setIsFormValidState(currentPackage.id && currentPackage.awb && currentPackage.delivery_address && currentPackage.package_email && currentPackage.pay_on_delivery && currentPackage.courier);
     }
+
+    const generateMapUrlFromAddress = (address) => {
+        if (address) {
+            return `https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_API_KEY}&q=${encodeURIComponent(address)}&zoom=10&maptype=roadmap`;
+        }
+        return '';
+    };
 
     var data = React.useMemo(() => packages, [packages]);
     const columns = React.useMemo(
@@ -151,7 +175,76 @@ const Packages = () => {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-
+                            <input
+                                type="text"
+                                className="form-control packages-input"
+                                value={currentPackage.awb || null}
+                                onChange={(e) => { setCurrentPackage({ ...currentPackage, awb: e.target.value }); validate() }}
+                                placeholder="Enter email"
+                            />
+                            <input
+                                type="text"
+                                className="form-control packages-input"
+                                value={currentPackage.delivery_address || null}
+                                onChange={(e) => { setCurrentPackage({ ...currentPackage, delivery_address: e.target.value }); validate() }}
+                                placeholder="Enter delivery address"
+                            />
+                            <input
+                                type="text"
+                                className="form-control packages-input"
+                                value={currentPackage.package_email || null}
+                                onChange={(e) => { setCurrentPackage({ ...currentPackage, package_email: e.target.value }); validate() }}
+                                placeholder="Enter package email"
+                            />
+                            <div class="form-check packages-input">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value={currentPackage.pay_on_delivery || null}
+                                    id="flexCheckDefault"
+                                    onChange={(e) => { setCurrentPackage({ ...currentPackage, pay_on_delivery: e.target.checked }); validate(); console.log(currentPackage) }}
+                                />
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Pay on delivery
+                                </label>
+                            </div>
+                            <select
+                                className="form-control packages-input"
+                                value={currentPackage.status == null ? "" : currentPackage.status}
+                                onChange={(e) => { setCurrentPackage({ ...currentPackage, status: e.target.value }); validate() }}
+                            >
+                                <option value="" disabled>Select a status...</option>
+                                <option key='0' value='0'>
+                                    New
+                                </option>
+                                <option key='1' value='1'>
+                                    Pending
+                                </option>
+                                <option key='2' value='2'>
+                                    Delivered
+                                </option>
+                            </select>
+                            <select
+                                className="form-control packages-input"
+                                value={currentPackage.courier == null ? "" : currentPackage.courier.id}
+                                onChange={(e) => { setCurrentPackage({ ...currentPackage, courier: couriers.find(courier => (courier.id == e.target.value)) }); validate() }}
+                            >
+                                <option value="" disabled>Select a courier...</option>
+                                {couriers.map(courier => (
+                                    <option key={courier.id} value={courier.id}>
+                                        {courier.name + " " + courier.email}
+                                    </option>
+                                ))}
+                            </select>
+                            <div className="maps-wrapper">
+                                <iframe
+                                    width="100%"
+                                    height="300px"
+                                    loading="lazy"
+                                    allowFullScreen
+                                    src={generateMapUrlFromAddress(currentPackage.delivery_address)}
+                                ></iframe>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

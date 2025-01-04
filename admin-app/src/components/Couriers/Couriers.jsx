@@ -286,7 +286,7 @@ const Couriers = () => {
                         </div>
                         <div class="modal-body">
                             <select
-                                className="form-control rate-input"
+                                className="form-control couriers-input"
                                 value={currentCourier.manager == null ? "" : currentCourier.manager.id}
                                 onChange={(e) => { setIdManager(e.target.value); validateManager() }}
                             >
