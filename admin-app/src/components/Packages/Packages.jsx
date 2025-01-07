@@ -127,7 +127,7 @@ const Packages = () => {
 
     const deliverPackage = (id) => {
         const userConfirmed = window.confirm('Are you sure you want to deliver this package?');
-        
+
         if (!userConfirmed) {
             return
         };
