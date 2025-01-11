@@ -64,8 +64,7 @@ const AwbTrack = () => {
     };
 
     return (
-        <div className="container-awbtrack">
-            {/* Header (Logo, menu) */}
+        <div>
             <header>
                 <a href="#" onClick={(e) => { e.preventDefault(); navigate('/') }}><img src={logo} className="logo" /> </a>
                 <ul>
@@ -75,65 +74,69 @@ const AwbTrack = () => {
                     <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/contact') }}>Contact</a></li>
                 </ul>
             </header>
+            <div className="container-awbtrack">
+                {/* Header (Logo, menu) */}
 
-            {/* Main content */}
-            {isLoading ? (
-                <div className="awb-container">
-                    <Skeleton height={40} width={300} />
-                    <div className="icon-container">
-                        <Skeleton circle={true} height={100} width={100} />
-                        <Skeleton circle={true} height={100} width={100} />
-                        <Skeleton circle={true} height={100} width={100} />
+
+                {/* Main content */}
+                {isLoading ? (
+                    <div className="awb-container">
+                        <Skeleton height={40} width={300} />
+                        <div className="icon-container">
+                            <Skeleton circle={true} height={100} width={100} />
+                            <Skeleton circle={true} height={100} width={100} />
+                            <Skeleton circle={true} height={100} width={100} />
+                        </div>
+                        <Skeleton height={300} width="100%" />
                     </div>
-                    <Skeleton height={300} width="100%" />
-                </div>
-            ) : (
-                <div className="awb-container">
-                    {packageData && packageData.length > 0 ? (
-                        <>
-                            <h1 className="awb-heading">Order status:</h1>
-                            <div className="icon-container">
-                                <div id='current-new' className={`status-icon ${status === 'NEW' ? 'current-status' : ''}`}>
-                                    <FaTruckLoading />
-                                    <span className='new'>New</span>
+                ) : (
+                    <div className="awb-container">
+                        {packageData && packageData.length > 0 ? (
+                            <>
+                                <h1 className="awb-heading">Order status:</h1>
+                                <div className="icon-container">
+                                    <div id='current-new' className={`status-icon ${status === 'NEW' ? 'current-status' : ''}`}>
+                                        <FaTruckLoading />
+                                        <span className='new'>New</span>
+                                    </div>
+                                    <div id='current-pending' className={`status-icon ${status === 'PENDING' ? 'current-status' : ''}`}>
+                                        <TbTruckDelivery />
+                                        <span className='pending'>Pending</span>
+                                    </div>
+                                    <div id='current-delivered' className={`status-icon ${status === 'DELIVERED' ? 'current-status' : ''}`}>
+                                        <FaCalendarCheck />
+                                        <span className='delivered'>Delivered</span>
+                                    </div>
                                 </div>
-                                <div id='current-pending' className={`status-icon ${status === 'PENDING' ? 'current-status' : ''}`}>
-                                    <TbTruckDelivery />
-                                    <span className='pending'>Pending</span>
+                                <div className="maps-wrapper">
+                                    <iframe
+                                        width="100%"
+                                        height="300px"
+                                        loading="lazy"
+                                        allowFullScreen
+                                        src={generateMapUrlFromAddress(packageData[0].deliveryAddress)}
+                                    ></iframe>
                                 </div>
-                                <div id='current-delivered' className={`status-icon ${status === 'DELIVERED' ? 'current-status' : ''}`}>
-                                    <FaCalendarCheck />
-                                    <span className='delivered'>Delivered</span>
+                                <div className="courier-info">
+                                    <div className='inline'>
+                                        <span className='courier-icon'><MdPersonPin /></span>
+                                        <h2>Courier Information</h2>
+                                    </div>
+                                    <p><strong>Name:</strong> {packageData[0]?.courier?.name || ''}</p>
+                                    <p><strong>Email:</strong> {packageData[0]?.courier?.email || ''}</p>
                                 </div>
-                            </div>
-                            <div className="maps-wrapper">
-                                <iframe
-                                    width="100%"
-                                    height="300px"
-                                    loading="lazy"
-                                    allowFullScreen
-                                    src={generateMapUrlFromAddress(packageData[0].deliveryAddress)}
-                                ></iframe>
-                            </div>
-                            <div className="courier-info">
-                                <div className='inline'>
-                                    <span className='courier-icon'><MdPersonPin /></span>
-                                    <h2>Courier Information</h2>
+                            </>
+                        ) : (
+                            <>
+                                <h1 className="no-order-message">No order found with the provided AWB number.</h1>
+                                <div className="big-icon">
+                                    <PiSmileySad />
                                 </div>
-                                <p><strong>Name:</strong> {packageData[0]?.courier?.name || ''}</p>
-                                <p><strong>Email:</strong> {packageData[0]?.courier?.email || ''}</p>
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <h1 className="no-order-message">No order found with the provided AWB number.</h1>
-                            <div className="big-icon">
-                                <PiSmileySad />
-                            </div>
-                        </>
-                    )}
-                </div>
-            )}
+                            </>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     )
 }
