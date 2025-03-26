@@ -18,13 +18,19 @@
 <img alt="Bootstrap" src="https://img.shields.io/badge/Bootstrap-7952B3.svg?style=flat&amp;logo=Bootstrap&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
 <img alt="CSS" src="https://img.shields.io/badge/CSS-663399.svg?style=flat&amp;logo=CSS&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
 <img alt="React%20Table" src="https://img.shields.io/badge/React%20Table-FF4154.svg?style=flat&amp;logo=React-Table&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
-</div>
+<br>
+<br>
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
 <br>
 <br>
 
 ExpressParcel is a delivery management system designed to streamline package tracking and courier operations. The application consists of a **Spring Boot API** with a **MySQL database**, and two frontend applications built with **React.js** and **Bootstrap**.
+</div>
+<br>
+<br>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
+
 ## Features
 
 ### Backend (Spring Boot API)
@@ -44,11 +50,6 @@ ExpressParcel is a delivery management system designed to streamline package tra
 - **Track Packages**: Search packages by **AWB (Air Waybill)**.
 - **Manager Insights**: View data on managers, including the number of packages delivered.
 - **Find Couriers**: Check available couriers with no pending packages and contact them.
-
-## Technologies Used
-- **Backend**: Spring Boot, MySQL, SMTP
-- **Frontend**: React.js, Bootstrap
-- **Security**: JWT authentication (TODO)
 
 ## Getting Started
 
