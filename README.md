@@ -1,4 +1,26 @@
-# <img src="https://raw.githubusercontent.com/BogdanBargaoanu/delivery/refs/heads/main/admin-app/src/components/Assets/logo.png" style="width: 100px;" /> ExpressParcel 
+<div align="center" class="text-center">
+<img src="https://raw.githubusercontent.com/BogdanBargaoanu/delivery/refs/heads/main/admin-app/src/components/Assets/logo.png" style="width: 100px;" /><h1>ExpressParcel</h1>
+<p><em>Delivering packages, empowering connections, enhancing experiences.</em></p>
+
+<img alt="last-commit" src="https://img.shields.io/github/last-commit/BogdanBargaoanu/ExpressParcel?style=flat&amp;logo=git&amp;logoColor=white&amp;color=0080ff" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="repo-top-language" src="https://img.shields.io/github/languages/top/BogdanBargaoanu/ExpressParcel?style=flat&amp;color=0080ff" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="repo-language-count" src="https://img.shields.io/github/languages/count/BogdanBargaoanu/ExpressParcel?style=flat&amp;color=0080ff" class="inline-block mx-1" style="margin: 0px 2px;">
+<p><em>Built with the tools and technologies:</em></p>
+<img alt="JSON" src="https://img.shields.io/badge/JSON-000000.svg?style=flat&amp;logo=JSON&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="Spring" src="https://img.shields.io/badge/Spring-000000.svg?style=flat&amp;logo=Spring&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="npm" src="https://img.shields.io/badge/npm-CB3837.svg?style=flat&amp;logo=npm&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&amp;logo=JavaScript&amp;logoColor=black" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="React%20Bootstrap" src="https://img.shields.io/badge/React%20Bootstrap-41E0FD.svg?style=flat&amp;logo=React-Bootstrap&amp;logoColor=black" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="React" src="https://img.shields.io/badge/React-61DAFB.svg?style=flat&amp;logo=React&amp;logoColor=black" class="inline-block mx-1" style="margin: 0px 2px;">
+<br>
+<img alt="XML" src="https://img.shields.io/badge/XML-005FAD.svg?style=flat&amp;logo=XML&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="Axios" src="https://img.shields.io/badge/Axios-5A29E4.svg?style=flat&amp;logo=Axios&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="Bootstrap" src="https://img.shields.io/badge/Bootstrap-7952B3.svg?style=flat&amp;logo=Bootstrap&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="CSS" src="https://img.shields.io/badge/CSS-663399.svg?style=flat&amp;logo=CSS&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+<img alt="React%20Table" src="https://img.shields.io/badge/React%20Table-FF4154.svg?style=flat&amp;logo=React-Table&amp;logoColor=white" class="inline-block mx-1" style="margin: 0px 2px;">
+</div>
+<br>
+<br>
 
 ExpressParcel is a delivery management system designed to streamline package tracking and courier operations. The application consists of a **Spring Boot API** with a **MySQL database**, and two frontend applications built with **React.js** and **Bootstrap**.
 
